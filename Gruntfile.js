@@ -5,13 +5,17 @@ module.exports = function (grunt) {
         pkg: grunt.file.readJSON('package.json'),
         concat: {
             main: {
-                src: ['src/common.js', 'src/chromosone.js', 'src/vector.js', 'src/core.js', 'src/storage.js',
+                src: ['src/chromosone.js', 'src/vector.js', 'src/core.js', 'src/storage.js',
                     'src/settings.js', 'src/ui.js'],
                 dest: 'public_html/<%= pkg.name %>.js'
             },
             worker: {
-                src: ['src/common.js', 'src/vector.js', 'src/workers/fractaler.js'],
+                src: ['src/chromosone.js', 'src/vector.js', 'src/workers/fractaler.js'],
                 dest: 'public_html/fractaler.js'
+            },
+            palleter: {
+                src: ['src/vector.js', 'src/workers/palleter.js'],
+                dest: 'public_html/palleter.js'
             }
         },
         uglify: {
@@ -26,6 +30,11 @@ module.exports = function (grunt) {
             worker: {
                 files: {
                     'public_html/fractaler.min.js': ['public_html/fractaler.js']
+                }
+            },
+            palleter: {
+                files: {
+                    'public_html/palleter.min.js': ['public_html/palleter.js']
                 }
             }
         },

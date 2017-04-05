@@ -28,3 +28,8 @@ canvas {
 td.table-label {
     text-align: right;
 }
+
+.pallete {
+    width: 100px;
+    height: 20px;
+}

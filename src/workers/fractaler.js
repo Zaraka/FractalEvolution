@@ -29,14 +29,6 @@ function createPixel(vec) {
     return [vec.x, vec.y, vec.z, vec.x + vec.y + vec.z];
 }
 
-function pallete(i, a, b, c, d) {
-    if (typeof i !== "number" && typeof a !== "object" && typeof b !== "object" && typeof c !== "object" && typeof d !== "object") {
-        throw new TypeError("pallete wrong arguments", "vector.js");
-    }
-    //return a + b*cos(2PI*(c*t+d));
-    return new Vec3(c).mul(i).add(d).mul(Math.PI * 2).cos().mul(b).add(a).toRGB(); // My life is whole
-}
-
 function createPallete(coloring, max, start, speed, a, b, c, d) {
     var colors = [];
 
