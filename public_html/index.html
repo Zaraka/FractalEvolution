@@ -156,14 +156,26 @@
                     <div role="tabpanel" class="tab-pane active" id="fractalTab">
                         <div class="radio">
                             <label>
-                                <input type="radio" name="fractal" value="quadratic" checked>
+                                <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
                                 Basic quadratic mandelbrot set z^2
                             </label>
                         </div>
                         <div class="radio">
                             <label>
-                                <input type="radio" name="fractal" value="cubic">
+                                <input type="radio" name="fractal" value="mandelbroot_cubic">
                                 "Mirrored" cubic mandelbrot set z^3
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="julia_quadratic" checked>
+                                Basic quadratic julia set z^2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="glynn_all" checked>
+                                Glynn fractal julia with exponent in range <1,2>
                             </label>
                         </div>
                     </div>
@@ -270,6 +282,27 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="width">cRe</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="cRe" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">cIm</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="cIm" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">exp</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="exp" value="1.5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
                         <label for="width">Red start</label>
                         <div class="input-group">
                             <input type="text" class="form-control" name="redStart" value="1">
@@ -327,27 +360,39 @@
 
                     <div class="radio">
                         <label>
-                            <input type="radio" name="fractal" value="quadratic" checked>
+                            <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
                             Basic quadratic mandelbrot set z^2
                         </label>
                     </div>
                     <div class="radio">
                         <label>
-                            <input type="radio" name="fractal" value="cubic">
+                            <input type="radio" name="fractal" value="mandelbroot_cubic">
                             "Mirrored" cubic mandelbrot set z^3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="julia_quadratic" checked>
+                            Basic quadratic julia set z^2
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="glynn_all" checked>
+                            Glynn fractal julia with exponent in range <1,2>
                         </label>
                     </div>
 
                     <div class="radio">
                         <label>
                             <input type="radio" name="color" value="simple" checked>
-                            Simple coloring growing to min RGB 0,0,0 or max RGB 255,255,255.
+                            Simple gradient between two random colors.
                         </label>
                     </div>
                     <div class="radio">
                         <label>
                             <input type="radio" name="color" value="modulo">
-                            Simple coloring but with modulo operator (crazy colors)
+                            Simple coloring but with modulo operator. This usually result with crazy colors steps.
                         </label>
                     </div>
                     <div class="radio">

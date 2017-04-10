@@ -81,7 +81,7 @@ var evo = {
         } else {
             var chromosone = new Chromosone(this.settings.chromosone[this.selected]);
 
-            while (equalChromosones(this.settings.chromosone[this.selected], chromosone, this.settings.color)) {
+            while (equalChromosones(this.settings.chromosone[this.selected], chromosone, this.settings)) {
                 chromosone.mutate(this.settings);
             }
             this.settings.chromosone[id] = chromosone;
@@ -89,16 +89,17 @@ var evo = {
 
         this.drawChromosone(id, null, null);
     },
-    drawChromosone: function (id, width, height) {
+    drawChromosone: function (id, width, height, hd) {
+        hd = typeof  hd === "undefined" ? false : hd;
         var chromosone = new Chromosone(this.settings.chromosone[id]);
-        chromosone.fractalId = id;
+        chromosone.fractalId = hd ? "hd" : id;
         chromosone.width = (width === null) ? this.canvas[id].width : width;
         chromosone.height = (height === null) ? this.canvas[id].height : height;
         chromosone.fractal = this.settings.fractal;
         chromosone.color = this.settings.color;
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
-        this.worker[id].postMessage(chromosone);
+        this.worker[hd ? 0 : id].postMessage(chromosone);
     },
     drawCustomChromosone: function (chromosone) {
         evo.worker[0].postMessage(chromosone);
@@ -116,31 +117,46 @@ var evo = {
 
 
                 this.ui.details.empty();
-                var ul = $('<table></table>').appendTo(this.ui.details);
+                var ul = $('<table style="margin: 0 auto;"></table>').appendTo(this.ui.details);
                 var chromosone = this.settings.chromosone[this.selected];
                 ul.append("<tr><td class='table-label'>Iterations</td><td>" + chromosone.iterationMax + "</td></tr>");
                 ul.append("<tr><td class='table-label'>Zoom</td><td>" + chromosone.zoom.toFixed(4) + "</td></tr>");
                 ul.append("<tr><td class='table-label'>X</td><td>" + chromosone.moveX.toFixed(4) + "</td></tr>");
                 ul.append("<tr><td class='table-label'>Y</td><td>" + chromosone.moveY.toFixed(4) + "</td></tr>");
+                if(typeof chromosone.cRe !== "undefined") {
+                    ul.append("<tr><td class='table-label'>cRe</td><td>" + chromosone.cRe.toFixed(4) + "</td></tr>");
+                }
+                if(typeof chromosone.cIm !== "undefined") {
+                    ul.append("<tr><td class='table-label'>cIm</td><td>" + chromosone.cIm.toFixed(4) + "</td></tr>");
+                }
+                if(typeof chromosone.exp !== "undefined") {
+                    ul.append("<tr><td class='table-label'>Exp</td><td>" + chromosone.exp.toFixed(4) + "</td></tr>");
+                }
+                ul.append("<tr><td class='table-label'>Pallete</td><td><canvas class='pallete' id='details-pallete'></canvas></td></tr>");
+                var canvas = document.getElementById('details-pallete');
+                var msg;
                 if (this.settings.color === "pallete") {
-                    ul.append("<tr><td class='table-label'>Pallete</td><td><canvas class='pallete' id='details-pallete'></canvas></td></tr>");
-                    var canvas = document.getElementById('details-pallete');
-                    this.palleter.postMessage({
+                    msg = {
                         width: canvas.width,
                         height: canvas.height,
+                        color: evo.settings.color,
+                        iterations: chromosone.iterationMax,
                         a: chromosone.a,
                         b: chromosone.b,
                         c: chromosone.c,
                         d: chromosone.d
-                    });
+                    };
                 } else {
-                    ul.append("<tr><td class='table-label'>Red start</td><td>" + chromosone.redStart + "</td></tr>");
-                    ul.append("<tr><td class='table-label'>Green start</td><td>" + chromosone.greenStart + "</td></tr>");
-                    ul.append("<tr><td class='table-label'>Blue Start</td><td>" + chromosone.blueStart + "</td></tr>");
-                    ul.append("<tr><td class='table-label'>Red speed</td><td>" + chromosone.redSpeed + "</td></tr>");
-                    ul.append("<tr><td class='table-label'>Green speed</td><td>" + chromosone.greenSpeed + "</td></tr>");
-                    ul.append("<tr><td class='table-label'>Blue speed</td><td>" + chromosone.blueSpeed + "</td></tr>");
+                    msg = {
+                        width: canvas.width,
+                        height: canvas.height,
+                        color: evo.settings.color,
+                        iterations: chromosone.iterationMax,
+                        start: new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart),
+                        speed: new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed)
+                    };
                 }
+                this.palleter.postMessage(msg);
                 ul.append("<tr><td class='table-label'>Entropy</td><td>" + this.entropy[this.selected].toFixed(4) + "</td></tr>");
                 $(".hiddable").removeClass("hidden");
 

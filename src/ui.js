@@ -85,29 +85,19 @@ evo.ui = {
     },
     saveImage: function (width, height) {
         this.popupWindow = window.open('waiting.html', '_blank');
-        evo.drawChromosone(evo.selected, width, height);
+        evo.drawChromosone(evo.selected, width, height, true);
     },
     saveCustom: function () {
         this.popupWindow = window.open('waiting.html', '_blank');
         var chromosone = {};
-        /**
-         * Chromosone structure as follows
-         * iterationMax
-         * zoom
-         * moveX
-         * moveY
-         * redStart
-         * greenStart
-         * blueStart
-         * redSpeed
-         * greenSpeed
-         * blueSpeed
-         */
         chromosone.fractalId = "hd";
         chromosone.iterationMax = parseInt(this.customForm.find('input[name=iterations]').val());
         chromosone.zoom = parseFloat(this.customForm.find('input[name=zoom]').val());
         chromosone.moveX = parseFloat(this.customForm.find('input[name=x]').val());
         chromosone.moveY = parseFloat(this.customForm.find('input[name=y]').val());
+        chromosone.cRe = parseFloat(this.customForm.find('input[name=cRe]').val());
+        chromosone.cIm = parseFloat(this.customForm.find('input[name=cIm]').val());
+        chromosone.exp = parseFloat(this.customForm.find('input[name=exp]').val());
         chromosone.redStart = parseInt(this.customForm.find('input[name=redStart]').val());
         chromosone.greenStart = parseInt(this.customForm.find('input[name=greenStart]').val());
         chromosone.blueStart = parseInt(this.customForm.find('input[name=blueStart]').val());

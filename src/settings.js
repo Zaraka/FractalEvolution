@@ -20,13 +20,26 @@ evo.settings = {
     structure: {
         iterationMax: {
             method: "random",
+            distribution: "exp",
             type: "integer",
             chance: 0.4,
-            min: 100,
-            max: 600,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 100,
+                    max: 6000
+                },
+                mandelbroot_cubic: {
+                    min: 100,
+                    max: 500
+                },
+                julia_quadratic: {
+                    min: 100,
+                    max: 6000
+                },
+                glynn_all: {
+                    min: 100,
+                    max: 500
+                }
             },
             include: function () {
                 return true;
@@ -34,14 +47,26 @@ evo.settings = {
         },
         zoom: {
             method: "step",
+            intensity: 1.0,
             type: "float",
             chance: 0.6,
-            intensity: 1.0,
-            min: 1.0,
-            max: 100.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 0.5
+                mandelbroot_quadratic: {
+                    min: 1,
+                    max: 100
+                },
+                mandelbroot_cubic: {
+                    min: 1,
+                    max: 100
+                },
+                julia_quadratic: {
+                    min: 1,
+                    max: 10
+                },
+                glynn_all: {
+                    min: 1,
+                    max: 20
+                }
             },
             include: function () {
                 return true;
@@ -49,14 +74,26 @@ evo.settings = {
         },
         moveX: {
             method: "step",
+            intensity: 1.0,
             type: "float",
             chance: 0.6,
-            intensity: 1.0,
-            min: -1.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: -0.75,
+                    max: 0.75
+                },
+                mandelbroot_cubic: {
+                    min: -1,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: -1,
+                    max: 1
+                },
+                glynn_all: {
+                    min: -1,
+                    max: 1
+                }
             },
             include: function () {
                 return true;
@@ -64,28 +101,102 @@ evo.settings = {
         },
         moveY: {
             method: "step",
+            intensity: 1.0,
             type: "float",
             chance: 0.6,
-            intensity: 1.0,
-            min: -1.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: -0.75,
+                    max: 0.75
+                },
+                mandelbroot_cubic: {
+                    min: -1,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: -1,
+                    max: 1
+                },
+                glynn_all: {
+                    min: -1,
+                    max: 1
+                }
             },
             include: function () {
                 return true;
             }
         },
+        cRe: {
+            method: "step",
+            intensity: 1.0,
+            type: "float",
+            chance: 0.6,
+            limit: {
+                julia_quadratic: {
+                    min: -1,
+                    max: 1
+                },
+                glynn_all: {
+                    min: -0.5,
+                    max: 0.5
+                }
+            },
+            include: function () {
+                return (evo.settings.fractal === "glynn_all" || evo.settings.fractal === "julia_quadratic");
+            }
+        },
+        cIm: {
+            method: "step",
+            intensity: 1.0,
+            type: "float",
+            chance: 0.6,
+            limit: {
+                julia_quadratic: {
+                    min: 0,
+                    max: 1
+                }
+            },
+            include: function () {
+                return evo.settings.fractal === "julia_quadratic";
+            }
+        },
+        exp: {
+            method: "step",
+            intensity: 1.0,
+            type: "float",
+            chance: 0.6,
+            limit: {
+                glynn_all: {
+                    min: 1,
+                    max: 2
+                }
+            },
+            include: function () {
+                return evo.settings.fractal === "glynn_all";
+            }
+        },
         redStart: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: 0,
-            max: 255,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 255
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 255
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -93,13 +204,26 @@ evo.settings = {
         },
         greenStart: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: 0,
-            max: 255,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 255
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 255
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -107,13 +231,26 @@ evo.settings = {
         },
         blueStart: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: 0,
-            max: 255,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 255
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 255
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 255
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -121,13 +258,26 @@ evo.settings = {
         },
         redSpeed: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: -10,
-            max: 10,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                mandelbroot_cubic: {
+                    min: -4,
+                    max: 4
+                },
+                julia_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                glynn_all: {
+                    min: -4,
+                    max: 4
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -135,13 +285,26 @@ evo.settings = {
         },
         greenSpeed: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: -10,
-            max: 10,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                mandelbroot_cubic: {
+                    min: -4,
+                    max: 4
+                },
+                julia_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                glynn_all: {
+                    min: -4,
+                    max: 4
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -149,13 +312,26 @@ evo.settings = {
         },
         blueSpeed: {
             method: "random",
+            distribution: "uniform",
             type: "integer",
             chance: 0.45,
-            min: -10,
-            max: 10,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                mandelbroot_cubic: {
+                    min: -4,
+                    max: 4
+                },
+                julia_quadratic: {
+                    min: -4,
+                    max: 4
+                },
+                glynn_all: {
+                    min: -4,
+                    max: 4
+                }
             },
             include: function () {
                 return (evo.settings.color !== "pallete");
@@ -164,12 +340,25 @@ evo.settings = {
         a: {
             type: "vec3",
             method: "random",
+            distribution: "uniform",
             chance: 0.45,
-            min: 0.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 1
+                }
             },
             include: function () {
                 return (evo.settings.color === "pallete");
@@ -178,12 +367,25 @@ evo.settings = {
         b: {
             type: "vec3",
             method: "random",
+            distribution: "uniform",
             chance: 0.45,
-            min: 0.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 1
+                }
             },
             include: function () {
                 return (evo.settings.color === "pallete");
@@ -192,12 +394,25 @@ evo.settings = {
         c: {
             type: "vec3",
             method: "random",
+            distribution: "uniform",
             chance: 0.45,
-            min: 0.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 1
+                }
             },
             include: function () {
                 return (evo.settings.color === "pallete");
@@ -206,12 +421,25 @@ evo.settings = {
         d: {
             type: "vec3",
             method: "random",
+            distribution: "uniform",
             chance: 0.45,
-            min: 0.0,
-            max: 1.0,
             limit: {
-                quadratic: 1.0,
-                cubic: 1.0
+                mandelbroot_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                mandelbroot_cubic: {
+                    min: 0,
+                    max: 1
+                },
+                julia_quadratic: {
+                    min: 0,
+                    max: 1
+                },
+                glynn_all: {
+                    min: 0,
+                    max: 1
+                }
             },
             include: function () {
                 return (evo.settings.color === "pallete");
@@ -219,8 +447,8 @@ evo.settings = {
         }
     },
     // Defaults
-    entropyLimit: 5.0,
-    fractal: "quadratic",
+    entropyLimit: 7.0,
+    fractal: "mandelbroot_quadratic",
     color: "simple",
     debugMode: true,
     iteration: 1
