@@ -27,11 +27,11 @@ var evo = {
                 this.canvas[i] = document.getElementById(i.toString());
                 this.canvas[i].height = (this.canvas[i].width / 4) * 3;
 
-                this.worker[i] = new Worker("fractaler.js");
+                this.worker[i] = new Worker("assets/js/fractaler.js");
                 this.worker[i].onmessage = this.processWorkerMessage;
             }
 
-            this.palleter = new Worker("palleter.js");
+            this.palleter = new Worker("assets/js/palleter.js");
             this.palleter.onmessage = function (e) {
                 var canvas = document.getElementById("details-pallete");
                 var ctx = canvas.getContext('2d');

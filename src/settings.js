@@ -20,13 +20,13 @@ evo.settings = {
     structure: {
         iterationMax: {
             method: "random",
-            distribution: "exp",
+            distribution: "uniform",
             type: "integer",
-            chance: 0.4,
+            chance: 0.45,
             limit: {
                 mandelbroot_quadratic: {
                     min: 100,
-                    max: 6000
+                    max: 3000
                 },
                 mandelbroot_cubic: {
                     min: 100,
@@ -34,7 +34,7 @@ evo.settings = {
                 },
                 julia_quadratic: {
                     min: 100,
-                    max: 6000
+                    max: 3000
                 },
                 glynn_all: {
                     min: 100,
@@ -83,8 +83,8 @@ evo.settings = {
                     max: 0.75
                 },
                 mandelbroot_cubic: {
-                    min: -1,
-                    max: 1
+                    min: -0.5,
+                    max: 0.5
                 },
                 julia_quadratic: {
                     min: -1,
@@ -451,5 +451,5 @@ evo.settings = {
     fractal: "mandelbroot_quadratic",
     color: "simple",
     debugMode: true,
-    iteration: 1
+    iteration: 0
 };

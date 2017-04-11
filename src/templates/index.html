@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fractal evolution</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <script src="assets/js/fracgen.js" type="text/javascript" defer></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div id="fractals" class="col-lg-10">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(0)">
+                        <canvas id="0"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(1)">
+                        <canvas id="1"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(2)">
+                        <canvas id="2"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(3)">
+                        <canvas id="3"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(4)">
+                        <canvas id="4"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(5)">
+                        <canvas id="5"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(6)">
+                        <canvas id="6"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(7)">
+                        <canvas id="7"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(8)">
+                        <canvas id="8"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu" class="col-lg-2 menu">
+            <h1>Iteration <span id="iteration"></span></h1>
+            <h3 id="command"></h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item hiddable hidden" onclick="evo.generate()">
+                    Create new generation
+                </a>
+                <a href="#" class="list-group-item hiddable hidden" data-toggle="modal" data-target="#saveDialog">Save
+                    HD image</a>
+            </div>
+            <div class="list-group">
+                <a href="#" id="load" class="list-group-item" onclick="evo.load()">Load</a>
+                <a href="#" class="list-group-item" onclick="evo.save()">Save</a>
+            </div>
+            <div class="list-group">
+                <a href="#" class="list-group-item" onclick="evo.generateNew()">Start over</a>
+                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">Settings</a>
+                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">Custom</a>
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#aboutDialog">About & FAQ</a>
+            </div>
+
+            <div class="hiddable" id="details">
+            </div>
+
+            <div class="fullscreen">
+                Press F11 to trigger FullScreen
+            </div>
+        </div>
+    </div>
+</div>
+
+include "dialogs/aboutDialog.html"
+include "dialogs/customDialog.html"
+include "dialogs/saveDialog.html"
+include "dialogs/settingsDialog.html"
+
+</body>
+</html>

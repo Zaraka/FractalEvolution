@@ -1,0 +1,170 @@
+<div class="modal fade" id="saveCustomDialog" tabindex="-1" role="dialog"
+     aria-labelledby="saveCustomDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="savecustomDialogLabel">Specify chromosone</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveCustom">
+                    <div class="form-group">
+                        <label for="width">Iterations</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="iterations" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Zoom</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="zoom" value="1.0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="width">X</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="x" value="1.0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Y</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="y" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">cRe</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="cRe" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">cIm</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="cIm" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">exp</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="exp" value="1.5">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">Red start</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="redStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Green start</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="greenStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="width">Blue start</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="blueStart" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">Red speed</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="redSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">Green speed</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="greenSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">Blue speed</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="blueSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="width">Width</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="width" value="1600">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="height">Height</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="height" value="900">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                    </div>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
+                            Basic quadratic mandelbrot set z^2
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="mandelbroot_cubic">
+                            "Mirrored" cubic mandelbrot set z^3
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="julia_quadratic" checked>
+                            Basic quadratic julia set z^2
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="fractal" value="glynn_all" checked>
+                            Glynn fractal julia with exponent in range <1,2>
+                        </label>
+                    </div>
+
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="color" value="simple" checked>
+                            Simple gradient between two random colors.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="color" value="modulo">
+                            Simple coloring but with modulo operator. This usually result with crazy colors
+                            steps.
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="color" value="pallete">
+                            Create random RGB pallete with linear cosine method. This method will possibly
+                            result with
+                            more standard fractal colors.
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="evo.ui.saveCustom();">Save image
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
