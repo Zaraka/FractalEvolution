@@ -451,5 +451,5 @@ evo.settings = {
     fractal: "mandelbroot_quadratic",
     color: "simple",
     debugMode: true,
-    iteration: 1
+    iteration: 0
 };
