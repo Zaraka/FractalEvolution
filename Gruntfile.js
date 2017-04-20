@@ -7,15 +7,15 @@ module.exports = function (grunt) {
             main: {
                 src: ['src/chromosone.js', 'src/vector.js', 'src/core.js', 'src/storage.js',
                     'src/settings.js', 'src/ui.js'],
-                dest: 'public_html/<%= pkg.name %>.js'
+                dest: 'public_html/assets/js/<%= pkg.name %>.js'
             },
             worker: {
                 src: ['src/chromosone.js', 'src/vector.js', 'src/workers/fractaler.js'],
-                dest: 'public_html/fractaler.js'
+                dest: 'public_html/assets/js/fractaler.js'
             },
             palleter: {
                 src: ['src/vector.js', 'src/workers/palleter.js'],
-                dest: 'public_html/palleter.js'
+                dest: 'public_html/assets/js/palleter.js'
             }
         },
         uglify: {
@@ -24,17 +24,17 @@ module.exports = function (grunt) {
             },
             main: {
                 files: {
-                    'public_html/<%= pkg.name %>.min.js': ['public_html/<%= pkg.name %>.js']
+                    'public_html/assets/js/<%= pkg.name %>.min.js': ['public_html/assets/js/<%= pkg.name %>.js']
                 }
             },
             worker: {
                 files: {
-                    'public_html/fractaler.min.js': ['public_html/fractaler.js']
+                    'public_html/assets/js/fractaler.min.js': ['public_html/assets/js/fractaler.js']
                 }
             },
             palleter: {
                 files: {
-                    'public_html/palleter.min.js': ['public_html/palleter.js']
+                    'public_html/assets/js/palleter.min.js': ['public_html/assets/js/palleter.js']
                 }
             }
         },
@@ -50,18 +50,27 @@ module.exports = function (grunt) {
                 }
             }
         },
-        watch: {
-            files: ['<%= jshint.files %>'],
-            tasks: ['jshint']
+        includes: {
+            files: {
+                src: ['src/templates/*.html'],
+                dest: 'public_html/',
+                flatten: true,
+                options: {
+                    silent: false,
+                    banner: '<!-- I am a banner <% includes.files.dest %> -->',
+                    includePath: "src/"
+                }
+            }
         }
+
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
-    grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-includes');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'concat', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'concat', 'includes', 'uglify']);
 
 };
