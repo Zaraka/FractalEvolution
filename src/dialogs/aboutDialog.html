@@ -12,7 +12,36 @@
                     <div class="col-lg-12">
                         <h3>Genetic fractal creation</h3>
                         <p>
-                            Nikita Vanku xvanku00@stud.fit.vutbr.cz
+                            What are you looking at is actually simple Fractal generation app using Genetic Algoritm. In following paragraphs I will explain to you how Genetic Algorithm works in this application and some interesting things about fractals.
+                        </p>
+                        <p>
+                            Made by Nikita Vanku xvanku00@stud.fit.vutbr.cz student project at VUT FIT.
+                        </p>
+                        <h4>Genetic Algorithm</h4>
+                        <p>
+                             Is algorithm inspired from real life evolution. In a brief explenation possible solution to problem is called chromosone. Chromosone is structure of genetic information. In this case it's a structure of several variables with representate a fractal, total number of 9 chromosones are generated. A population of fixed number of chromosones (in this case 9) is created with random values. Then algorithm will compute their fitness value, which is something like score, chromosones with better score is considered better than chromosone with lower score. In this case <b>User</b> is assigning higher score by selecting one of the chromosones (that are generated into fractals you actually see). In next iteration user selected chromosone is preserved and rest of the chromosones are created by <b>mutating</b> preserved chromosones into new ones. Mutation works by randomly replacing some part of the chromosone with new ones. In this case mutation can alter color palette, zoom, position and some of the fractal constants. If user will always select chromosone with similliar characterestics he should be capable of creating a "best" fractal thorought a number of iterations.
+                        </p>
+                        <p>
+                            As you can see Genetic Algorithm is very simple case of actual genetic mutation thorought generations. Genetic Algorithm is working with chromosones which represent data structure, altering those chromosone by creating a mutation component, gvaluating generated chromosones and finally selecting best chromosones into next generation.
+                        </p>
+                        <p>
+                            In this app mutation operation is implemented by generating a whole new random number, or "moving" existing number to its lowest or highest form.
+                        </p>
+                        <p>
+                            Population of chromosones is fixed to 9 because with 9 fractals we can create a simple matrix of fractals that fit the user screen.
+                        </p>
+                        <p>
+                            Fitness evaluation is limited to only one chromosone which will be selected into next generation. Because of this app feels very simple and anyone can use it.
+                        </p>
+                        <h4>Fractal generations</h4>
+                        <p>
+                            Generating 2D fractals is actually quite simple. Let's first learn what those fractals actually are. In this application you can generate fractals from Mandelbroot set, Julia set and Glynn modification of Julia set. All of these sets are sets of powers of complex numbers which do not diverge in some regions. This regions create those signature shape you can see in the settings. So why can you see those pretty colors? It's because every iteration(power) of selected set is coloured in different color. Every chromosone has defined pallete of colors from 0 to max iteration. That's why coloring method of these fractals is very important and produce completely different methods.
+                        </p>
+                        <p>
+                            In settings color tab you can read more about implemented coloring methods. They are quite simple. But even simple methods can create beatiful fractals. Feel free to experiment by using different color methods into different fractals sometimes even though selected color method have pitfalls it could create unique images.
+                        </p>
+                        <p>
+                            Read more about fractals and its coloring from this <a href="http://eldar.mathstat.uoguelph.ca/dashlock/ftax/">website</a> which was used as main source while creating this wonderful application.
                         </p>
                     </div>
                 </div>
