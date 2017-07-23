@@ -17,9 +17,6 @@
                     <li role="presentation">
                         <a href="#colorTab" aria-controls="profile" role="tab" data-toggle="tab">Colors</a>
                     </li>
-                    <li role="presentation">
-                        <a href="#miscTab" aria-controls="messages" role="tab" data-toggle="tab">Miscellaneous</a>
-                    </li>
                 </ul>
 
                 <!-- Tab panes -->
@@ -38,7 +35,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_quadratic.png" width="300" height="200"
+                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_quadratic.png"
+                                     width="300" height="200"
                                      alt="mandelbroot quadratic">
                             </div>
                         </div>
@@ -48,12 +46,14 @@
                                     <label>
                                         <input type="radio" name="fractal" value="mandelbroot_cubic">
                                         Cubic mandelbrot set z^3. <b>Medium performance</b>. Not much different
-                                        from quadratic version, result looks like quadratic only "mirrored" by both axis.
+                                        from quadratic version, result looks like quadratic only "mirrored" by both
+                                        axis.
                                     </label>
                                 </div>
                             </div>
                             <div class="col-lg-6">
-                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_cubic.png" width="300" height="200"
+                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_cubic.png" width="300"
+                                     height="200"
                                      alt="mandelbroot cubic">
                             </div>
                         </div>
@@ -61,7 +61,7 @@
                             <div class="col-lg-6">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="fractal" value="julia_quadratic" checked>
+                                        <input type="radio" name="fractal" value="julia_quadratic">
                                         Basic quadratic julia set z^2. <b>High performance</b>. When somebody mention
                                         fractals this is usually what they mean. Julia set is actually subset of
                                         Mandelbroot set. Julia set usually result in spirals, but feels much more random
@@ -78,11 +78,15 @@
                             <div class="col-lg-6">
                                 <div class="radio">
                                     <label>
-                                        <input type="radio" name="fractal" value="glynn_all" checked>
-                                        <b style="color: orangered">LOW PERFORMANCE!</b> Glynn fractal is actualy just Julia set with zero imaginary
-                                        part of z. Instead exponent of z is explored in range <1,2> (best result are around 1.5).
-                                        Glynn fractal creates oval shapes with "trees" in them. They are quite beatiful if
-                                        you manage to mutate into them. Beware first iteration will take a lot of time to generate,
+                                        <input type="radio" name="fractal" value="glynn_all">
+                                        <b style="color: orangered">LOW PERFORMANCE!</b> Glynn fractal is actualy just
+                                        Julia set with zero imaginary
+                                        part of z. Instead exponent of z is explored in range <1,2> (best result are
+                                        around 1.5).
+                                        Glynn fractal creates oval shapes with "trees" in them. They are quite beatiful
+                                        if
+                                        you manage to mutate into them. Beware first iteration will take a lot of time
+                                        to generate,
                                         advanced generations will be much faster.
                                     </label>
                                 </div>
@@ -139,14 +143,6 @@
                             <div class="col-lg-6">
                                 <img class="settings-icon" src="assets/img/color_pallete.png" width="300" height="200"
                                      alt="pallete">
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="miscTab">
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox" id="debug_mode" value="">
-                                    Enable debug mode
-                                </label>
                             </div>
                         </div>
                     </div>

@@ -124,3 +124,7 @@ typings/
 # End of https://www.gitignore.io/api/node,intellij
 
 samples/
+
+public_html/index.html
+public_html/assets/css/style.css
+public_html/assets/js/*

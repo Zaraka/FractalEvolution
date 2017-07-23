@@ -23,7 +23,7 @@
 <body>
 <div class="container-fluid">
     <div class="row">
-        <div id="fractals" class="col-lg-10">
+        <div id="fractals" class="col-lg-9">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-4 fractal" onclick="evo.select(0)">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div id="menu" class="col-lg-2 menu">
+        <div id="menu" class="col-lg-3 menu">
             <h1>Iteration <span id="iteration"></span></h1>
             <h3 id="command"></h3>
             <div class="list-group">
@@ -70,14 +70,14 @@
                 <a href="#" class="list-group-item hiddable hidden" data-toggle="modal" data-target="#saveDialog">Save
                     HD image</a>
             </div>
-            <div class="list-group">
+            <!--div class="list-group">
                 <a href="#" id="load" class="list-group-item" onclick="evo.load()">Load</a>
                 <a href="#" class="list-group-item" onclick="evo.save()">Save</a>
-            </div>
+            </div-->
             <div class="list-group">
                 <a href="#" class="list-group-item" onclick="evo.generateNew()">Start over</a>
-                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">Settings</a>
-                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">Custom</a>
+                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">Generator settings</a>
+                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">Custom fractal</a>
                 <a href="#" class="list-group-item" data-toggle="modal" data-target="#aboutDialog">About & FAQ</a>
             </div>
 

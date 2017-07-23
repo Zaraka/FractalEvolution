@@ -61,6 +61,14 @@ module.exports = function (grunt) {
                     includePath: "src/"
                 }
             }
+        },
+        copy: {
+            main: {
+                expand: true,
+                flatten: true,
+                src: 'src/dependencies/*',
+                dest: 'public_html/assets/js/'
+            }
         }
 
     });
@@ -68,9 +76,10 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-jshint');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-includes');
 
     // Default task(s).
-    grunt.registerTask('default', ['jshint', 'concat', 'includes', 'uglify']);
+    grunt.registerTask('default', ['jshint', 'concat', 'includes', 'uglify', 'copy']);
 
 };

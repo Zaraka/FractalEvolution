@@ -63,7 +63,7 @@ var evo = {
             this.ui.updateCounter();
 
             for (var i = 0; i < 9; i++) {
-                if (i == this.selected) {
+                if (i === this.selected) {
                     this.generated++;
                     this.ui.updateCounter();
                     continue;
@@ -106,7 +106,7 @@ var evo = {
     },
     select: function (id) {
         if (!this.lock) {
-            if (id == this.selected) {//unselect
+            if (id === this.selected) {//unselect
                 this.hideSelect();
             } else {//select
                 if (this.selected !== null) {
@@ -176,7 +176,7 @@ var evo = {
         //console.log("hey " + e.data.fractalId);
         var ctx;
         var imageData;
-        if (e.data.fractalId != "hd") {
+        if (e.data.fractalId !== "hd") {
             //is fractal good enough?
             if (e.data.entropy <= evo.settings.entropyLimit) {
                 evo.generateFractal(e.data.fractalId); //generate new one
@@ -189,7 +189,7 @@ var evo = {
 
                 evo.generated++; // good continue
                 evo.ui.updateCounter();
-                if (evo.generated == 9) {
+                if (evo.generated === 9) {
                     $("#" + evo.selected).parent().removeClass("locked");
                     evo.hideSelect();
                     evo.lock = false;

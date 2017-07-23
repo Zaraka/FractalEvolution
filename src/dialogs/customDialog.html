@@ -9,153 +9,169 @@
             </div>
             <div class="modal-body">
                 <form id="saveCustom">
-                    <div class="form-group">
-                        <label for="width">Iterations</label>
+                    <div class="col-xs-12">
+                        <h4>
+                           Basic
+                        </h4>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_iterations">Iterations (30 - 6000)</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="iterations" value="100">
+                            <input class="form-control" id="custom_iterations" name="iterations" value="100">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="width">Zoom</label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_zoom">Zoom</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="zoom" value="1.0">
+                            <input class="form-control" id="custom_zoom" name="zoom" value="1.0">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="width">X</label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_x">X (-1.0 - 1.0)</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="x" value="1.0">
+                            <input class="form-control" id="custom_x" name="x" value="1.0">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="width">Y</label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_y">Y (-1.0 - 1.0)</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="y" value="1.0">
+                            <input class="form-control" id="custom_y" name="y" value="1.0">
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="width">cRe</label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_width">Width</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="cRe" value="1.0">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">cIm</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="cIm" value="1.0">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">exp</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="exp" value="1.5">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">Red start</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="redStart" value="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="width">Green start</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="greenStart" value="1">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="width">Blue start</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="blueStart" value="1">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">Red speed</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="redSpeed" value="1">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">Green speed</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="greenSpeed" value="1">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">Blue speed</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="blueSpeed" value="1">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="width">Width</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="width" value="1600">
+                            <input class="form-control" id="custom_width" name="width" value="1600">
                             <div class="input-group-addon">px</div>
                         </div>
                     </div>
-
-                    <div class="form-group">
-                        <label for="height">Height</label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_height">Height</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" name="height" value="900">
+                            <input class="form-control" id="custom_height" name="height" value="900">
                             <div class="input-group-addon">px</div>
                         </div>
                     </div>
+                    <div class="col-xs-6">
+                        <h4>Fractal type</h4>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
+                                Basic quadratic mandelbrot set z^2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="mandelbroot_cubic">
+                                "Mirrored" cubic mandelbrot set z^3
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="julia_quadratic" checked>
+                                Basic quadratic julia set z^2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="glynn_all" checked>
+                                Glynn fractal julia with exponent in range <1,2>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4>Color method</h4>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="simple" checked>
+                                Simple gradient between two random colors.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="modulo">
+                                Simple coloring but with modulo operator. This usually result with crazy colors
+                                steps.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="pallete">
+                                Create random RGB pallete with linear cosine method. This method will possibly
+                                result with
+                                more standard fractal colors.
+                            </label>
+                        </div>
+                    </div>
 
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
-                            Basic quadratic mandelbrot set z^2
-                        </label>
+                    <div class="col-xs-12">
+                        <h4>
+                            Fractal attributes
+                        </h4>
                     </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fractal" value="mandelbroot_cubic">
-                            "Mirrored" cubic mandelbrot set z^3
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fractal" value="julia_quadratic" checked>
-                            Basic quadratic julia set z^2
-                        </label>
-                    </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="fractal" value="glynn_all" checked>
-                            Glynn fractal julia with exponent in range <1,2>
-                        </label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_cRe">cRe (julia & glynn)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_cRe" name="cRe" value="1.0">
+                        </div>
                     </div>
 
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="color" value="simple" checked>
-                            Simple gradient between two random colors.
-                        </label>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_cIm">cIm (julia)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_cIm" name="cIm" value="1.0">
+                        </div>
                     </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="color" value="modulo">
-                            Simple coloring but with modulo operator. This usually result with crazy colors
-                            steps.
-                        </label>
+
+                    <div class="form-group col-xs-12">
+                        <label for="custom_exp">exp (glynn) 1.0 - 2.0</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_exp" name="exp" value="1.5">
+                        </div>
                     </div>
-                    <div class="radio">
-                        <label>
-                            <input type="radio" name="color" value="pallete">
-                            Create random RGB pallete with linear cosine method. This method will possibly
-                            result with
-                            more standard fractal colors.
-                        </label>
+                    <div class="col-xs-12">
+                        <h4>
+                            Colors
+                        </h4>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_redStart">Red start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_redStart" name="redStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_greenStart">Green start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_greenStart" name="greenStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_blueStart">Blue start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_blueStart" name="blueStart" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_redSpeed">Red speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_redSpeed" name="redSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_greenSpeed">Green speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_greenSpeed" name="greenSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_blueSpeed">Blue speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_blueSpeed" name="blueSpeed" value="1">
+                        </div>
                     </div>
                 </form>
             </div>
