@@ -1,0 +1,40 @@
+canvas {
+    background-color: white;
+    width: 100%;
+}
+
+.fractal {
+    background-color: black;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.fractal:hover {
+    background-color: greenyellow;
+}
+
+.fractal.active {
+    background-color: greenyellow;
+}
+
+.fractal.locked {
+    background-color: orangered;
+}
+.menu {
+    margin: 0.5em auto;
+    text-align: center;
+}
+
+td.table-label {
+    text-align: right;
+}
+
+.pallete {
+    margin-left: 20px;
+    width: 140px;
+    height: 20px;
+}
+
+.settings-icon {
+
+}

@@ -13,4 +13,4 @@ prerequisites
 $ npm install
 $ grunt
 ```
-Then a index.html will be generated and fully working in public_html directory
+Then a index.html will be generated and fully working in docs directory

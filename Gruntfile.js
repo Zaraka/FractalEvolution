@@ -7,15 +7,15 @@ module.exports = function (grunt) {
             main: {
                 src: ['src/chromosone.js', 'src/vector.js', 'src/core.js', 'src/storage.js',
                     'src/settings.js', 'src/ui.js'],
-                dest: 'public_html/assets/js/<%= pkg.name %>.js'
+                dest: 'docs/assets/js/<%= pkg.name %>.js'
             },
             worker: {
                 src: ['src/chromosone.js', 'src/vector.js', 'src/workers/fractaler.js'],
-                dest: 'public_html/assets/js/fractaler.js'
+                dest: 'docs/assets/js/fractaler.js'
             },
             palleter: {
                 src: ['src/vector.js', 'src/workers/palleter.js'],
-                dest: 'public_html/assets/js/palleter.js'
+                dest: 'docs/assets/js/palleter.js'
             }
         },
         uglify: {
@@ -24,17 +24,17 @@ module.exports = function (grunt) {
             },
             main: {
                 files: {
-                    'public_html/assets/js/<%= pkg.name %>.min.js': ['public_html/assets/js/<%= pkg.name %>.js']
+                    'docs/assets/js/<%= pkg.name %>.min.js': ['docs/assets/js/<%= pkg.name %>.js']
                 }
             },
             worker: {
                 files: {
-                    'public_html/assets/js/fractaler.min.js': ['public_html/assets/js/fractaler.js']
+                    'docs/assets/js/fractaler.min.js': ['docs/assets/js/fractaler.js']
                 }
             },
             palleter: {
                 files: {
-                    'public_html/assets/js/palleter.min.js': ['public_html/assets/js/palleter.js']
+                    'docs/assets/js/palleter.min.js': ['docs/assets/js/palleter.js']
                 }
             }
         },
@@ -53,7 +53,7 @@ module.exports = function (grunt) {
         includes: {
             files: {
                 src: ['src/templates/*.html'],
-                dest: 'public_html/',
+                dest: 'docs/',
                 flatten: true,
                 options: {
                     silent: false,
@@ -67,7 +67,7 @@ module.exports = function (grunt) {
                 expand: true,
                 flatten: true,
                 src: 'src/dependencies/*',
-                dest: 'public_html/assets/js/'
+                dest: 'docs/assets/js/'
             }
         }
 

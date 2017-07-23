@@ -1,0 +1,531 @@
+<!-- I am a banner  --><!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Fractal evolution</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script
+            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="assets/css/style.css"/>
+    <script src="assets/js/fracgen.js" type="text/javascript" defer></script>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div id="fractals" class="col-lg-9">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(0)">
+                        <canvas id="0"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(1)">
+                        <canvas id="1"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(2)">
+                        <canvas id="2"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(3)">
+                        <canvas id="3"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(4)">
+                        <canvas id="4"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(5)">
+                        <canvas id="5"></canvas>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-4 fractal" onclick="evo.select(6)">
+                        <canvas id="6"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(7)">
+                        <canvas id="7"></canvas>
+                    </div>
+                    <div class="col-lg-4 fractal" onclick="evo.select(8)">
+                        <canvas id="8"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="menu" class="col-lg-3 menu">
+            <h1>Iteration <span id="iteration"></span></h1>
+            <h3 id="command"></h3>
+            <div class="list-group">
+                <a href="#" class="list-group-item hiddable hidden" onclick="evo.generate()">
+                    Create new generation
+                </a>
+                <a href="#" class="list-group-item hiddable hidden" data-toggle="modal" data-target="#saveDialog">Save
+                    HD image</a>
+            </div>
+            <!--div class="list-group">
+                <a href="#" id="load" class="list-group-item" onclick="evo.load()">Load</a>
+                <a href="#" class="list-group-item" onclick="evo.save()">Save</a>
+            </div-->
+            <div class="list-group">
+                <a href="#" class="list-group-item" onclick="evo.generateNew()">Start over</a>
+                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">Generator settings</a>
+                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">Custom fractal</a>
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#aboutDialog">About & FAQ</a>
+            </div>
+
+            <div class="hiddable" id="details">
+            </div>
+
+            <div class="fullscreen">
+                Press F11 to trigger FullScreen
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="aboutDialog" tabindex="-1" role="dialog" aria-labelledby="aboutDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="aboutDialogLabel">About</h4>
+            </div>
+
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Genetic fractal creation</h3>
+                        <p>
+                            What are you looking at is actually simple Fractal generation app using Genetic Algoritm. In following paragraphs I will explain to you how Genetic Algorithm works in this application and some interesting things about fractals.
+                        </p>
+                        <p>
+                            Made by Nikita Vanku xvanku00@stud.fit.vutbr.cz student project at VUT FIT.
+                        </p>
+                        <h4>Genetic Algorithm</h4>
+                        <p>
+                             Is algorithm inspired from real life evolution. In a brief explenation possible solution to problem is called chromosone. Chromosone is structure of genetic information. In this case it's a structure of several variables with representate a fractal, total number of 9 chromosones are generated. A population of fixed number of chromosones (in this case 9) is created with random values. Then algorithm will compute their fitness value, which is something like score, chromosones with better score is considered better than chromosone with lower score. In this case <b>User</b> is assigning higher score by selecting one of the chromosones (that are generated into fractals you actually see). In next iteration user selected chromosone is preserved and rest of the chromosones are created by <b>mutating</b> preserved chromosones into new ones. Mutation works by randomly replacing some part of the chromosone with new ones. In this case mutation can alter color palette, zoom, position and some of the fractal constants. If user will always select chromosone with similliar characterestics he should be capable of creating a "best" fractal thorought a number of iterations.
+                        </p>
+                        <p>
+                            As you can see Genetic Algorithm is very simple case of actual genetic mutation thorought generations. Genetic Algorithm is working with chromosones which represent data structure, altering those chromosone by creating a mutation component, gvaluating generated chromosones and finally selecting best chromosones into next generation.
+                        </p>
+                        <p>
+                            In this app mutation operation is implemented by generating a whole new random number, or "moving" existing number to its lowest or highest form.
+                        </p>
+                        <p>
+                            Population of chromosones is fixed to 9 because with 9 fractals we can create a simple matrix of fractals that fit the user screen.
+                        </p>
+                        <p>
+                            Fitness evaluation is limited to only one chromosone which will be selected into next generation. Because of this app feels very simple and anyone can use it.
+                        </p>
+                        <h4>Fractal generations</h4>
+                        <p>
+                            Generating 2D fractals is actually quite simple. Let's first learn what those fractals actually are. In this application you can generate fractals from Mandelbroot set, Julia set and Glynn modification of Julia set. All of these sets are sets of powers of complex numbers which do not diverge in some regions. This regions create those signature shape you can see in the settings. So why can you see those pretty colors? It's because every iteration(power) of selected set is coloured in different color. Every chromosone has defined pallete of colors from 0 to max iteration. That's why coloring method of these fractals is very important and produce completely different methods.
+                        </p>
+                        <p>
+                            In settings color tab you can read more about implemented coloring methods. They are quite simple. But even simple methods can create beatiful fractals. Feel free to experiment by using different color methods into different fractals sometimes even though selected color method have pitfalls it could create unique images.
+                        </p>
+                        <p>
+                            Read more about fractals and its coloring from this <a href="http://eldar.mathstat.uoguelph.ca/dashlock/ftax/">website</a> which was used as main source while creating this wonderful application.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="saveCustomDialog" tabindex="-1" role="dialog"
+     aria-labelledby="saveCustomDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="savecustomDialogLabel">Specify chromosone</h4>
+            </div>
+            <div class="modal-body">
+                <form id="saveCustom">
+                    <div class="col-xs-12">
+                        <h4>
+                           Basic
+                        </h4>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_iterations">Iterations (30 - 6000)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_iterations" name="iterations" value="100">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_zoom">Zoom</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_zoom" name="zoom" value="1.0">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_x">X (-1.0 - 1.0)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_x" name="x" value="1.0">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_y">Y (-1.0 - 1.0)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_y" name="y" value="1.0">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_width">Width</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_width" name="width" value="1600">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_height">Height</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_height" name="height" value="900">
+                            <div class="input-group-addon">px</div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4>Fractal type</h4>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
+                                Basic quadratic mandelbrot set z^2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="mandelbroot_cubic">
+                                "Mirrored" cubic mandelbrot set z^3
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="julia_quadratic" checked>
+                                Basic quadratic julia set z^2
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="fractal" value="glynn_all" checked>
+                                Glynn fractal julia with exponent in range <1,2>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <h4>Color method</h4>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="simple" checked>
+                                Simple gradient between two random colors.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="modulo">
+                                Simple coloring but with modulo operator. This usually result with crazy colors
+                                steps.
+                            </label>
+                        </div>
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="color" value="pallete">
+                                Create random RGB pallete with linear cosine method. This method will possibly
+                                result with
+                                more standard fractal colors.
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12">
+                        <h4>
+                            Fractal attributes
+                        </h4>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_cRe">cRe (julia & glynn)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_cRe" name="cRe" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_cIm">cIm (julia)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_cIm" name="cIm" value="1.0">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-12">
+                        <label for="custom_exp">exp (glynn) 1.0 - 2.0</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_exp" name="exp" value="1.5">
+                        </div>
+                    </div>
+                    <div class="col-xs-12">
+                        <h4>
+                            Colors
+                        </h4>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_redStart">Red start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_redStart" name="redStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_greenStart">Green start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_greenStart" name="greenStart" value="1">
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6">
+                        <label for="custom_blueStart">Blue start (1 - 254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_blueStart" name="blueStart" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_redSpeed">Red speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_redSpeed" name="redSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_greenSpeed">Green speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_greenSpeed" name="greenSpeed" value="1">
+                        </div>
+                    </div>
+
+                    <div class="form-group col-xs-6">
+                        <label for="custom_blueSpeed">Blue speed (1-254)</label>
+                        <div class="input-group">
+                            <input class="form-control" id="custom_blueSpeed" name="blueSpeed" value="1">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="evo.ui.saveCustom();">Save image
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="saveDialog" tabindex="-1" role="dialog" aria-labelledby="saveDialogLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="saveDialogLabel">Select resolution</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="width">Width</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="width" placeholder="1600">
+                        <div class="input-group-addon">px</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="height">Height</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="height" placeholder="900">
+                        <div class="input-group-addon">px</div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="evo.ui.saveImage($('#width').val(),$('#height').val());">Save image
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="settingsDialog" tabindex="-1" role="dialog" aria-labelledby="settingsDialogLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title" id="settingsDialogLabel">Settings</h4>
+            </div>
+
+            <div class="modal-body">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#fractalTab" aria-controls="home" role="tab"
+                           data-toggle="tab">Fractals</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#colorTab" aria-controls="profile" role="tab" data-toggle="tab">Colors</a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="fractalTab">
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fractal" value="mandelbroot_quadratic" checked>
+                                        Basic quadratic mandelbrot set z^2. <b>High performance</b>. Because how fast
+                                        this method is, iteration can mutate up to 3000. Once you are acquainted with
+                                        mandelbroot set shape and you are still wondering why you are seing some really
+                                        crazy stuff, it's result of high zooming and unexpected coloring.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_quadratic.png"
+                                     width="300" height="200"
+                                     alt="mandelbroot quadratic">
+                            </div>
+                        </div>
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fractal" value="mandelbroot_cubic">
+                                        Cubic mandelbrot set z^3. <b>Medium performance</b>. Not much different
+                                        from quadratic version, result looks like quadratic only "mirrored" by both
+                                        axis.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/fractal_mandelbroot_cubic.png" width="300"
+                                     height="200"
+                                     alt="mandelbroot cubic">
+                            </div>
+                        </div>
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fractal" value="julia_quadratic">
+                                        Basic quadratic julia set z^2. <b>High performance</b>. When somebody mention
+                                        fractals this is usually what they mean. Julia set is actually subset of
+                                        Mandelbroot set. Julia set usually result in spirals, but feels much more random
+                                        than simple Mandelbroot set.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/fractal_julia.png" width="300" height="200"
+                                     alt="julia">
+                            </div>
+                        </div>
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="fractal" value="glynn_all">
+                                        <b style="color: orangered">LOW PERFORMANCE!</b> Glynn fractal is actualy just
+                                        Julia set with zero imaginary
+                                        part of z. Instead exponent of z is explored in range <1,2> (best result are
+                                        around 1.5).
+                                        Glynn fractal creates oval shapes with "trees" in them. They are quite beatiful
+                                        if
+                                        you manage to mutate into them. Beware first iteration will take a lot of time
+                                        to generate,
+                                        advanced generations will be much faster.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/fractal_glynn.png" width="300" height="200"
+                                     alt="glynn">
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="colorTab">
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="color" value="simple" checked>
+                                        Simple gradient between two random colors. This method works with satisfiable
+                                        result in every fractal except Glynn.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/color_simple.png" width="300" height="200"
+                                     alt="simple">
+                            </div>
+                        </div>
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="color" value="modulo">
+                                        Simple coloring but with modulo operator. This usually result with crazy
+                                        colors steps. Pallete will usually cirlce between same colors number of times.
+                                        Modulo method is best used on Glynn fractals.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/color_modulo.png" width="300" height="200"
+                                     alt="modulo">
+                            </div>
+                        </div>
+                        <div style="margin-top: 1em" class="row">
+                            <div class="col-lg-6">
+                                <div class="radio">
+                                    <label>
+                                        <input type="radio" name="color" value="pallete">
+                                        Create random RGB pallete with linear cosine method. This method will
+                                        possibly result with more standard fractal colors. Works with satisfiable
+                                        result in every fractal except Glynn.
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <img class="settings-icon" src="assets/img/color_pallete.png" width="300" height="200"
+                                     alt="pallete">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            onclick="evo.ui.saveSettings();">
+                        Save
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
