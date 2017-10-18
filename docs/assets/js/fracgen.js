@@ -378,6 +378,8 @@ var evo = {
         if (!this.lock) {
             this.lock = true;
             $(".hiddable").addClass("hidden");
+            $(".lockable").prop("disabled", true);
+            $(".lockable").addClass("list-item-disabled");
             $("#" + this.selected).parent().addClass("locked");
             this.generated = 0;
             this.ui.updateCounter();
@@ -479,8 +481,9 @@ var evo = {
                 this.palleter.postMessage(msg);
                 ul.append("<tr><td class='table-label'>Entropy</td><td>" + this.entropy[this.selected].toFixed(4) + "</td></tr>");
                 $(".hiddable").removeClass("hidden");
-
-                this.ui.command.innerHTML = "";
+                $(".lockable").removeClass("list-item-disabled");
+                $(".lockable").prop("disabled", false);
+                this.ui.command.innerHTML = "&nbsp;";
             }
         }
     },
@@ -489,6 +492,8 @@ var evo = {
             $("#" + this.selected).parent().removeClass("active");
 
         $(".hiddable").addClass("hidden");
+        $(".lockable").addClass("list-item-disabled");
+        $(".lockable").prop("disabled", true);
         this.ui.command.innerHTML = "Select fractal you like";
         this.selected = null;
     },

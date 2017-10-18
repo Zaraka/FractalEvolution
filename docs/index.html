@@ -16,9 +16,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
             integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
             crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" href="assets/css/style.css"/>
     <script src="assets/js/fracgen.js" type="text/javascript" defer></script>
+    <link rel="stylesheet" href="assets/css/style.css"/>
 </head>
 <body>
 <div class="container-fluid">
@@ -62,13 +61,13 @@
         </div>
         <div id="menu" class="col-lg-3 menu">
             <h1>Iteration <span id="iteration"></span></h1>
-            <h3 id="command"></h3>
+            <h3 id="command">&nbsp;</h3>
             <div class="list-group">
-                <a href="#" class="list-group-item hiddable hidden" onclick="evo.generate()">
+                <button class="list-group-item lockable" disabled="disabled" onclick="evo.generate()">
                     Create new generation
-                </a>
-                <a href="#" class="list-group-item hiddable hidden" data-toggle="modal" data-target="#saveDialog">Save
-                    HD image</a>
+                </button>
+                <button class="list-group-item lockable" disabled="disabled" data-toggle="modal" data-target="#saveDialog">Save
+                    HD image</button>
             </div>
             <!--div class="list-group">
                 <a href="#" id="load" class="list-group-item" onclick="evo.load()">Load</a>

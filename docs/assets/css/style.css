@@ -38,3 +38,11 @@ td.table-label {
 .settings-icon {
 
 }
+
+button {
+    text-align: center !important;
+}
+
+.list-item-disabled {
+    color: #266a56 !important;
+}
