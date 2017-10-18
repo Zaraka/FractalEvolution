@@ -46,3 +46,8 @@ button {
 .list-item-disabled {
     color: #266a56 !important;
 }
+
+.important-button {
+    font-weight: bold;
+    font-size: 15pt;
+}
