@@ -10,11 +10,11 @@ canvas {
 }
 
 .fractal:hover {
-    background-color: greenyellow;
+    background-color: #0CE3AC;
 }
 
 .fractal.active {
-    background-color: greenyellow;
+    background-color: #0CE3AC;
 }
 
 .fractal.locked {
