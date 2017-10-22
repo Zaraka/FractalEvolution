@@ -363,12 +363,14 @@ var evo = {
     lock: false,
     checkRequirements: function () {
         if (typeof(Storage) === "undefined") {
-            alert("This browser doesn't support localstorage needed for application run.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "This browser doesn't support localstorage needed for application run.");
             return false;
         }
 
         if (typeof(Worker) === "undefined") {
-            alert("This browser doesn't support Web Worker needed for application run.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "This browser doesn't support Web Worker needed for application run.");
             return false;
         }
         return true;
@@ -402,7 +404,8 @@ var evo = {
     },
     generateNew: function () {
         if (this.lock) {
-            alert("Please wait until new fractals are generated before reseting.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until new fractals are generated before reseting.");
         } else {
             this.ui.resetIteration();
             this.hideSelect();
@@ -552,7 +555,6 @@ var evo = {
         var imageData;
         var canvas;
 
-        console.log(e.data.fractalId);
         if (e.data.fractalId === "hd") {
             canvas = document.createElement('canvas');
             canvas.width = e.data.resolution.x;
@@ -562,6 +564,9 @@ var evo = {
             imageData.data.set(e.data.imageData);
             ctx.putImageData(imageData, 0, 0);
             evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
+
+            evo.ui.addAlertMessage(
+                "alert-info", "Info", "Fractal in HD resolution has been rendered into separate window.");
         } else if (e.data.fractalId === "preview") {
             canvas = document.getElementById("preview-canvas");
             canvas.width = e.data.resolution.x;
@@ -1154,7 +1159,8 @@ evo.ui = {
     },
     openSettings: function () {
         if (evo.lock) {
-            alert("Please wait until fractals are generated");
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
         } else {
             $('#color[name=color][value=' + evo.settings.color + ']').prop("checked", true);
             $('#fractal[name=color][value=' + evo.settings.fractal + ']').prop("checked", true);
@@ -1186,7 +1192,8 @@ evo.ui = {
     },
     openCustom: function () {
         if (evo.lock) {
-            alert("Please wait until fractals are generated");
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
         } else {
             this.custom.modal('show');
         }
@@ -1234,6 +1241,13 @@ evo.ui = {
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
         evo.drawCustomChromosone(chromosone);
+    },
+    addAlertMessage: function(alertType, header, message) {
+        var alert = $('<div class="alert alert-dismissable fade-in"></div>');
+        alert.addClass(alertType);
+        alert.append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+        alert.append('<strong>' + header + '</strong> ' + message);
+        $('#alert-overlay').prepend(alert);
     }
 };
 evo.spionner = {

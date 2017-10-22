@@ -51,3 +51,8 @@ button {
     font-weight: bold;
     font-size: 15pt;
 }
+
+#alert-overlay {
+    z-index: 999;
+    position: fixed
+}

@@ -47,7 +47,8 @@ evo.ui = {
     },
     openSettings: function () {
         if (evo.lock) {
-            alert("Please wait until fractals are generated");
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
         } else {
             $('#color[name=color][value=' + evo.settings.color + ']').prop("checked", true);
             $('#fractal[name=color][value=' + evo.settings.fractal + ']').prop("checked", true);
@@ -79,7 +80,8 @@ evo.ui = {
     },
     openCustom: function () {
         if (evo.lock) {
-            alert("Please wait until fractals are generated");
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
         } else {
             this.custom.modal('show');
         }
@@ -127,5 +129,12 @@ evo.ui = {
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
         evo.drawCustomChromosone(chromosone);
+    },
+    addAlertMessage: function(alertType, header, message) {
+        var alert = $('<div class="alert alert-dismissable fade-in"></div>');
+        alert.addClass(alertType);
+        alert.append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
+        alert.append('<strong>' + header + '</strong> ' + message);
+        $('#alert-overlay').prepend(alert);
     }
 };

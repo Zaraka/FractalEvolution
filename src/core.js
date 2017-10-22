@@ -8,12 +8,14 @@ var evo = {
     lock: false,
     checkRequirements: function () {
         if (typeof(Storage) === "undefined") {
-            alert("This browser doesn't support localstorage needed for application run.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "This browser doesn't support localstorage needed for application run.");
             return false;
         }
 
         if (typeof(Worker) === "undefined") {
-            alert("This browser doesn't support Web Worker needed for application run.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "This browser doesn't support Web Worker needed for application run.");
             return false;
         }
         return true;
@@ -47,7 +49,8 @@ var evo = {
     },
     generateNew: function () {
         if (this.lock) {
-            alert("Please wait until new fractals are generated before reseting.");
+            this.ui.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until new fractals are generated before reseting.");
         } else {
             this.ui.resetIteration();
             this.hideSelect();
@@ -197,7 +200,6 @@ var evo = {
         var imageData;
         var canvas;
 
-        console.log(e.data.fractalId);
         if (e.data.fractalId === "hd") {
             canvas = document.createElement('canvas');
             canvas.width = e.data.resolution.x;
@@ -207,6 +209,9 @@ var evo = {
             imageData.data.set(e.data.imageData);
             ctx.putImageData(imageData, 0, 0);
             evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
+
+            evo.ui.addAlertMessage(
+                "alert-info", "Info", "Fractal in HD resolution has been rendered into separate window.");
         } else if (e.data.fractalId === "preview") {
             canvas = document.getElementById("preview-canvas");
             canvas.width = e.data.resolution.x;
