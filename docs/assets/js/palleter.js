@@ -1,10 +1,45 @@
+function Rect(/*x,y,w,h | vec2,vex2*/) {
+    var x = 0, y = 0, width = 0, height = 0;
+    if(arguments.length === 4) {
+        x = arguments[0];
+        y = arguments[1];
+        width = arguments[2];
+        height = arguments[3];
+    } else if (arguments.length === 2) {
+        x = arguments[0].x;
+        y = arguments[0].y;
+        width = arguments[1].x;
+        height = arguments[1].y;
+    }
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+}
+
+function Vec2(/*x, y | vec2*/) {
+    var x = 0, y = 0;
+    if(arguments.length === 2) {
+        x = arguments[0];
+        y = arguments[1];
+    } else if (arguments.length === 1) {
+        var vec2 = arguments[0];
+        if(typeof  vec2 !== "undefined") {
+            x = vec2.x;
+            y = vec2.y;
+        }
+    }
+    this.x = x;
+    this.y = y;
+}
+
 function Vec3(/*x,y,z | vec3 | from,to*/) {
     var x = 0, y = 0, z = 0;
-    if (arguments.length == 3) {
+    if (arguments.length === 3) {
         x = arguments[0];
         y = arguments[1];
         z = arguments[2];
-    } else if (arguments.length == 1) {
+    } else if (arguments.length === 1) {
         var vec3 = arguments[0];
         if (typeof vec3 !== "undefined") {
             x = vec3.x;
@@ -103,7 +138,7 @@ Vec3.prototype.equals = function (that) {
         return true;
     }
 
-    return (this.x == that.x && this.y == that.y && this.z == that.z);
+    return (this.x === that.x && this.y === that.y && this.z === that.z);
 };
 
 function pallete(i, a, b, c, d) {

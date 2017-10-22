@@ -57,9 +57,9 @@ var evo = {
     generate: function () {
         if (!this.lock) {
             this.lock = true;
-            $(".hiddable").addClass("hidden");
-            $(".lockable").prop("disabled", true);
-            $(".lockable").addClass("list-item-disabled");
+            this.ui.hiddable.addClass("hidden");
+            this.ui.lockable.prop("disabled", true);
+            this.ui.lockable.addClass("list-item-disabled");
             $("#" + this.selected).parent().addClass("locked");
             this.generated = 0;
             this.ui.updateCounter();
@@ -91,17 +91,25 @@ var evo = {
 
         this.drawChromosone(id, null, null);
     },
-    drawChromosone: function (id, width, height, hd) {
-        hd = typeof  hd === "undefined" ? false : hd;
+    drawChromosone: function (id, width, height, type) {
+        type = typeof  type === "undefined" ? false : type;
         var chromosone = new Chromosone(this.settings.chromosone[id]);
-        chromosone.fractalId = hd ? "hd" : id;
-        chromosone.width = (width === null) ? this.canvas[id].width : width;
-        chromosone.height = (height === null) ? this.canvas[id].height : height;
+        chromosone.fractalId = type ? type : id;
+        chromosone.resolution = new Vec2(
+            (width === null) ? this.canvas[id].width : width,
+            (height === null) ? this.canvas[id].height : height);
         chromosone.fractal = this.settings.fractal;
         chromosone.color = this.settings.color;
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
-        this.worker[hd ? 0 : id].postMessage(chromosone);
+        if (type === "preview") {
+            chromosone.limit = new Vec2(
+                evo.settings.structure.moveX.limit[this.settings.fractal].center,
+                evo.settings.structure.moveY.limit[this.settings.fractal].center
+            );
+        }
+        var receiver = (type === "hd" || type === "preview") ? 0 : id;
+        this.worker[receiver].postMessage(chromosone);
     },
     drawCustomChromosone: function (chromosone) {
         evo.worker[0].postMessage(chromosone);
@@ -119,19 +127,22 @@ var evo = {
 
 
                 this.ui.details.empty();
+                $('<canvas id="preview-canvas" style="width: 150px; height: 150px"></canvas>').appendTo(this.ui.details);
+                this.drawChromosone(id, 150, 150, "preview");
+
                 var ul = $('<table style="margin: 0 auto;"></table>').appendTo(this.ui.details);
                 var chromosone = this.settings.chromosone[this.selected];
                 ul.append("<tr><td class='table-label'>Iterations</td><td>" + chromosone.iterationMax + "</td></tr>");
                 ul.append("<tr><td class='table-label'>Zoom</td><td>" + chromosone.zoom.toFixed(4) + "</td></tr>");
                 ul.append("<tr><td class='table-label'>X</td><td>" + chromosone.moveX.toFixed(4) + "</td></tr>");
                 ul.append("<tr><td class='table-label'>Y</td><td>" + chromosone.moveY.toFixed(4) + "</td></tr>");
-                if(typeof chromosone.cRe !== "undefined") {
+                if (typeof chromosone.cRe !== "undefined") {
                     ul.append("<tr><td class='table-label'>cRe</td><td>" + chromosone.cRe.toFixed(4) + "</td></tr>");
                 }
-                if(typeof chromosone.cIm !== "undefined") {
+                if (typeof chromosone.cIm !== "undefined") {
                     ul.append("<tr><td class='table-label'>cIm</td><td>" + chromosone.cIm.toFixed(4) + "</td></tr>");
                 }
-                if(typeof chromosone.exp !== "undefined") {
+                if (typeof chromosone.exp !== "undefined") {
                     ul.append("<tr><td class='table-label'>Exp</td><td>" + chromosone.exp.toFixed(4) + "</td></tr>");
                 }
                 ul.append("<tr><td class='table-label'>Pallete</td><td><canvas class='pallete' id='details-pallete'></canvas></td></tr>");
@@ -160,9 +171,9 @@ var evo = {
                 }
                 this.palleter.postMessage(msg);
                 ul.append("<tr><td class='table-label'>Entropy</td><td>" + this.entropy[this.selected].toFixed(4) + "</td></tr>");
-                $(".hiddable").removeClass("hidden");
-                $(".lockable").removeClass("list-item-disabled");
-                $(".lockable").prop("disabled", false);
+                this.ui.hiddable.removeClass("hidden");
+                this.ui.lockable.removeClass("list-item-disabled");
+                this.ui.lockable.prop("disabled", false);
                 this.ui.command.innerHTML = "&nbsp;";
             }
         }
@@ -171,17 +182,17 @@ var evo = {
         if (this.selected !== null)
             $("#" + this.selected).parent().removeClass("active");
 
-        $(".hiddable").addClass("hidden");
-        $(".lockable").addClass("list-item-disabled");
-        $(".lockable").prop("disabled", true);
+        this.ui.hiddable.addClass("hidden");
+        this.ui.lockable.addClass("list-item-disabled");
+        this.ui.lockable.prop("disabled", true);
         this.ui.command.innerHTML = "Select fractal you like";
         this.selected = null;
     },
     processWorkerMessage: function (e) {
-        //console.log("hey " + e.data.fractalId);
         var ctx;
         var imageData;
-        if (e.data.fractalId !== "hd") {
+        var canvas;
+        if (!isNaN(e.data.fractalId) && isFinite(e.data.fractalId)) {
             //is fractal good enough?
             if (e.data.entropy <= evo.settings.entropyLimit) {
                 evo.generateFractal(e.data.fractalId); //generate new one
@@ -201,15 +212,23 @@ var evo = {
                     evo.generated = 0;
                 }
             }
-        } else {
-            var canvas = document.createElement('canvas');
-            canvas.width = e.data.width;
-            canvas.height = e.data.height;
+        } else if (e.data.fractalId === "hd") {
+            canvas = document.createElement('canvas');
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
             ctx = canvas.getContext('2d');
             imageData = ctx.createImageData(canvas.width, canvas.height);
             imageData.data.set(e.data.imageData);
             ctx.putImageData(imageData, 0, 0);
             evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
+        } else if (e.data.fractalId === "preview") {
+            canvas = document.getElementById("preview-canvas");
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
+            ctx = canvas.getContext("2d");
+            imageData = ctx.createImageData(e.data.resolution.x, e.data.resolution.y);
+            imageData.data.set(e.data.imageData);
+            ctx.putImageData(imageData, 0, 0);
         }
     }
 };

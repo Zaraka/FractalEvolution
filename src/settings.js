@@ -30,14 +30,14 @@ evo.settings = {
                 },
                 mandelbroot_cubic: {
                     min: 100,
-                    max: 500
+                    max: 300
                 },
                 julia_quadratic: {
                     min: 100,
                     max: 3000
                 },
                 glynn_all: {
-                    min: 100,
+                    min: 200,
                     max: 500
                 }
             },
@@ -53,15 +53,15 @@ evo.settings = {
             limit: {
                 mandelbroot_quadratic: {
                     min: 1,
-                    max: 100
+                    max: 400
                 },
                 mandelbroot_cubic: {
                     min: 1,
-                    max: 100
+                    max: 300
                 },
                 julia_quadratic: {
                     min: 1,
-                    max: 10
+                    max: 100
                 },
                 glynn_all: {
                     min: 1,
@@ -79,20 +79,24 @@ evo.settings = {
             chance: 0.6,
             limit: {
                 mandelbroot_quadratic: {
-                    min: -0.75,
-                    max: 0.75
+                    min: -1,
+                    max: 1,
+                    center: -0.5
                 },
                 mandelbroot_cubic: {
-                    min: -0.5,
-                    max: 0.5
+                    min: 0.3,
+                    max: 0.6,
+                    center: -0.25
                 },
                 julia_quadratic: {
                     min: -1,
-                    max: 1
+                    max: 1,
+                    center: 0
                 },
                 glynn_all: {
                     min: -1,
-                    max: 1
+                    max: 1,
+                    center: 0
                 }
             },
             include: function () {
@@ -106,20 +110,24 @@ evo.settings = {
             chance: 0.6,
             limit: {
                 mandelbroot_quadratic: {
-                    min: -0.75,
-                    max: 0.75
+                    min: -1,
+                    max: 1,
+                    center: 0
                 },
                 mandelbroot_cubic: {
-                    min: -1,
-                    max: 1
+                    min: -0.3,
+                    max: 0.3,
+                    center: 0
                 },
                 julia_quadratic: {
                     min: -1,
-                    max: 1
+                    max: 1,
+                    center: 0
                 },
                 glynn_all: {
                     min: -1,
-                    max: 1
+                    max: 1,
+                    center: 0
                 }
             },
             include: function () {
@@ -138,7 +146,7 @@ evo.settings = {
                 },
                 glynn_all: {
                     min: -0.5,
-                    max: 0.5
+                    max: 0.0
                 }
             },
             include: function () {

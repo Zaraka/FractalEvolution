@@ -7,6 +7,8 @@ evo.ui = {
     custom: null,
     popupWindow: null,
     customForm: null,
+    hiddable: null,
+    lockable: null,
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
         this.command = document.getElementById("command");
@@ -15,6 +17,8 @@ evo.ui = {
         this.load = $("#load");
         this.custom = $("#saveCustomDialog");
         this.customForm = $("#saveCustom");
+        this.hiddable = $(".hiddable");
+        this.lockable = $(".lockable");
         this.update();
     },
     update: function () {
@@ -44,11 +48,11 @@ evo.ui = {
         var newColor = $('input[name=color]:checked', '#settingsDialog').val();
         var newFractal = $('input[name=fractal]:checked', '#settingsDialog').val();
         var regenerate = false;
-        if (newColor != evo.settings.color) {
+        if (newColor !== evo.settings.color) {
             evo.settings.color = newColor;
             regenerate = true;
         }
-        if (newFractal != evo.settings.fractal) {
+        if (newFractal !== evo.settings.fractal) {
             evo.settings.fractal = newFractal;
             regenerate = true;
         }
@@ -106,6 +110,7 @@ evo.ui = {
         chromosone.blueSpeed = parseInt(this.customForm.find('input[name=blueSpeed]').val());
         chromosone.width = parseInt(this.customForm.find('input[name=width]').val());
         chromosone.height = parseInt(this.customForm.find('input[name=height]').val());
+        chromosone.resolution = new Vec2(chromosone.width, chromosone.height);
         chromosone.fractal = this.customForm.find('input[name=fractal]:checked').val();
         chromosone.color = this.customForm.find('input[name=color]:checked').val();
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);

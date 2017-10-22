@@ -1,18 +1,18 @@
 onmessage = function (e) {
     //console.log(e.data);
-    var imageData = new Uint8ClampedArray(e.data.width * e.data.height * 4);
+    var imageData = new Uint8ClampedArray(e.data.resolution.x * e.data.resolution.y * 4);
     var entropy;
     var method = e.data.fractal.split("_");
+    var zoom = (e.data.fractalId === "preview") ? 0.9 : e.data.zoom;
+    var move = (typeof e.data.limit === "undefined") ? new Vec2(e.data.moveX, e.data.moveY) : e.data.limit ;
     if (method[0] === "mandelbroot") {
         entropy = drawMandelbroot(imageData,
             method[1],
             e.data.color,
-            e.data.width,
-            e.data.height,
+            e.data.resolution,
             e.data.iterationMax,
-            e.data.zoom,
-            e.data.moveX,
-            e.data.moveY,
+            zoom,
+            move,
             new Vec3(e.data.start),
             new Vec3(e.data.speed),
             new Vec3(e.data.a),
@@ -23,12 +23,10 @@ onmessage = function (e) {
     } else if (method[0] === "julia") {
         entropy = drawJulia(imageData,
             e.data.color,
-            e.data.width,
-            e.data.height,
+            e.data.resolution,
             e.data.iterationMax,
-            e.data.zoom,
-            e.data.moveX,
-            e.data.moveY,
+            zoom,
+            move,
             e.data.cRe,
             e.data.cIm,
             new Vec3(e.data.start),
@@ -41,12 +39,10 @@ onmessage = function (e) {
     } else if (method[0] === "glynn") {
         entropy = drawGlynn(imageData,
             e.data.color,
-            e.data.width,
-            e.data.height,
+            e.data.resolution,
             e.data.iterationMax,
-            e.data.zoom,
-            e.data.moveX,
-            e.data.moveY,
+            zoom,
+            move,
             e.data.cRe,
             e.data.exp,
             new Vec3(e.data.start),
@@ -62,8 +58,9 @@ onmessage = function (e) {
         fractalId: e.data.fractalId,
         imageData: imageData,
         entropy: entropy,
-        width: e.data.width,
-        height: e.data.height
+        resolution: e.data.resolution,
+        move: new Vec2(e.data.moveX, e.data.moveY),
+        zoom: e.data.zoom
     });
 };
 
@@ -88,11 +85,11 @@ function createPallete(coloring, max, start, speed, a, b, c, d) {
         }
     } else {
         for (var i = 0; i < max; i++) {
-            if (coloring == "simple") {
+            if (coloring === "simple") {
                 if (start.x + speed.x < 255 && start.x + speed.x > 0) start.x += speed.x;
                 if (start.y + speed.y < 255 && start.y + speed.y > 0) start.y += speed.y;
                 if (start.z + speed.z < 255 && start.z + speed.z > 0) start.z += speed.z;
-            } else if (coloring == "modulo") {
+            } else if (coloring === "modulo") {
                 start.add(speed).mod(255);
             }
             colors[i] = createPixel(start);
@@ -102,29 +99,29 @@ function createPallete(coloring, max, start, speed, a, b, c, d) {
     return colors;
 }
 
-function drawMandelbroot(imageData, fractalMethod, coloring, width, height, max, zoom, moveX, moveY, start, speed, a, b, c, d) {
+function drawMandelbroot(imageData, fractalMethod, coloring, resolution, max, zoom, move, start, speed, a, b, c, d) {
     var imagePos = 0;
     var colors = createPallete(coloring, max, start, speed, a, b, c, d);
     var entropy = 0;
     var lastColor = 0;
     var curColor;
 
-    for (var row = 0; row < height; row++) {
-        for (var col = 0; col < width; col++) {
-            var c_re = 1.5 * (col - width / 2.0) / (0.5 * zoom * width) + moveX;
-            var c_im = (row - height / 2.0) / (0.5 * zoom * height) + moveY;
+    for (var row = 0; row < resolution.y; row++) {
+        for (var col = 0; col < resolution.x; col++) {
+            var c_re = 1.5 * (col - resolution.x / 2.0) / (0.5 * zoom * resolution.x) + move.x;
+            var c_im = (row - resolution.y / 2.0) / (0.5 * zoom * resolution.y) + move.y;
             var x = 0, y = 0;
             var iteration = 0;
             var x_new;
-            if (fractalMethod == "quadratic") {
-                while (x * x + y * y <= 2 && iteration < max) {
+            if (fractalMethod === "quadratic") {
+                while (x * x + y * y <= 4 && iteration < max) {
                     x_new = x * x - y * y + c_re;
                     y = 2 * x * y + c_im;
                     x = x_new;
                     iteration++;
                 }
-            } else if (fractalMethod == "cubic") {
-                while (x * x + y * y <= 2 && iteration < max) {
+            } else if (fractalMethod === "cubic") {
+                while (x * x + y * y <= 4 && iteration < max) {
                     x_new = x * x * x - 3 * x * (y * y) + c_re;
                     y = 3 * x * x * y - y * y * y + c_im;
                     x = x_new;
@@ -153,10 +150,10 @@ function drawMandelbroot(imageData, fractalMethod, coloring, width, height, max,
         }
     }
 
-    return entropy / (width * height);
+    return entropy / (resolution.x * resolution.y);
 }
 
-function drawJulia(imageData, coloring, width, height, max, zoom, moveX, moveY, cRe, cIm, start, speed, a, b, c, d) {
+function drawJulia(imageData, coloring, resolution, max, zoom, move, cRe, cIm, start, speed, a, b, c, d) {
     var imagePos = 0;
     var colors = createPallete(coloring, max, start, speed, a, b, c, d);
     var entropy = 0;
@@ -165,10 +162,10 @@ function drawJulia(imageData, coloring, width, height, max, zoom, moveX, moveY, 
     var iteration;
     var curColor;
 
-    for (var y = 0; y < height; y++) {
-        for (var x = 0; x < width; x++) {
-            newRe = 1.5 * (x - width / 2) / (0.5 * zoom * width) + moveX;
-            newIm = (y - height / 2) / (0.5 * zoom * height) + moveY;
+    for (var y = 0; y < resolution.y; y++) {
+        for (var x = 0; x < resolution.x; x++) {
+            newRe = 1.5 * (x - resolution.x / 2) / (0.5 * zoom * resolution.x) + move.x;
+            newIm = (y - resolution.y / 2) / (0.5 * zoom * resolution.y) + move.y;
 
             for (iteration = 0; iteration < max && (newRe * newRe + newIm * newIm) < 4; iteration++) {
                 oldRe = newRe;
@@ -197,10 +194,10 @@ function drawJulia(imageData, coloring, width, height, max, zoom, moveX, moveY, 
         }
     }
 
-    return entropy / (width * height);
+    return entropy / (resolution.x * resolution.y);
 }
 
-function drawGlynn(imageData, coloring, width, height, max, zoom, moveX, moveY, cRe, exp, start, speed, a, b, c, d) {
+function drawGlynn(imageData, coloring, resolution, max, zoom, move, cRe, exp, start, speed, a, b, c, d) {
     var imagePos = 0;
     var colors = createPallete(coloring, max, start, speed, a, b, c, d);
     var entropy = 0;
@@ -211,10 +208,10 @@ function drawGlynn(imageData, coloring, width, height, max, zoom, moveX, moveY, 
     var iteration;
     var curColor;
 
-    for (var y = 0; y < height; y++) {
-        for (var x = 0; x < width; x++) {
-            zRe = 1.5 * (x - width / 2) / (0.5 * zoom * width) + moveX;
-            zIm = (y - height / 2) / (0.5 * zoom * height) + moveY;
+    for (var y = 0; y < resolution.y; y++) {
+        for (var x = 0; x < resolution.x; x++) {
+            zRe = 1.5 * (x - resolution.x / 2) / (0.5 * zoom * resolution.x) + move.x;
+            zIm = (y - resolution.y / 2) / (0.5 * zoom * resolution.y) + move.y;
             for (iteration = 0; iteration < max && (zRe * zRe + zIm * zIm) < 4; iteration++) {
                 o = Math.atan2(zIm, zRe);
                 r = Math.sqrt(zRe * zRe + zIm * zIm);
@@ -243,5 +240,5 @@ function drawGlynn(imageData, coloring, width, height, max, zoom, moveX, moveY, 
         }
     }
 
-    return entropy / (width * height);
+    return entropy / (resolution.x * resolution.y);
 }
