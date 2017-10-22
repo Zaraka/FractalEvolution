@@ -551,7 +551,26 @@ var evo = {
         var ctx;
         var imageData;
         var canvas;
-        if (!isNaN(e.data.fractalId) && isFinite(e.data.fractalId)) {
+
+        console.log(e.data.fractalId);
+        if (e.data.fractalId === "hd") {
+            canvas = document.createElement('canvas');
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
+            ctx = canvas.getContext('2d');
+            imageData = ctx.createImageData(canvas.width, canvas.height);
+            imageData.data.set(e.data.imageData);
+            ctx.putImageData(imageData, 0, 0);
+            evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
+        } else if (e.data.fractalId === "preview") {
+            canvas = document.getElementById("preview-canvas");
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
+            ctx = canvas.getContext("2d");
+            imageData = ctx.createImageData(e.data.resolution.x, e.data.resolution.y);
+            imageData.data.set(e.data.imageData);
+            ctx.putImageData(imageData, 0, 0);
+        } else if (!isNaN(e.data.fractalId) && isFinite(e.data.fractalId)) {
             //is fractal good enough?
             if (e.data.entropy <= evo.settings.entropyLimit) {
                 evo.generateFractal(e.data.fractalId); //generate new one
@@ -574,23 +593,6 @@ var evo = {
                     evo.generated = 0;
                 }
             }
-        } else if (e.data.fractalId === "hd") {
-            canvas = document.createElement('canvas');
-            canvas.width = e.data.resolution.x;
-            canvas.height = e.data.resolution.y;
-            ctx = canvas.getContext('2d');
-            imageData = ctx.createImageData(canvas.width, canvas.height);
-            imageData.data.set(e.data.imageData);
-            ctx.putImageData(imageData, 0, 0);
-            evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
-        } else if (e.data.fractalId === "preview") {
-            canvas = document.getElementById("preview-canvas");
-            canvas.width = e.data.resolution.x;
-            canvas.height = e.data.resolution.y;
-            ctx = canvas.getContext("2d");
-            imageData = ctx.createImageData(e.data.resolution.x, e.data.resolution.y);
-            imageData.data.set(e.data.imageData);
-            ctx.putImageData(imageData, 0, 0);
         }
     }
 };
@@ -1115,7 +1117,6 @@ evo.ui = {
     hiddable: null,
     lockable: null,
     spinner: [],
-    canvas: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
         this.command = document.getElementById("command");
@@ -1127,20 +1128,19 @@ evo.ui = {
         this.hiddable = $(".hiddable");
         this.lockable = $(".lockable");
 
-        for(var i = 0; i < 9; i++) {
+        for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
-            this.canvas[i] = document.getElementById(i);
         }
 
         this.update();
     },
-    clearCanvas: function(id) {
-        var ctx = this.canvas[id].getContext("2d");
+    clearCanvas: function (id) {
+        var ctx = evo.canvas[id].getContext("2d");
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0,0,this.canvas[id].width, this.canvas[id].height);
+        ctx.fillRect(0, 0, evo.canvas[id].width, evo.canvas[id].height);
     },
     update: function () {
-        if(evo.settings.debugMode) {
+        if (evo.settings.debugMode) {
             $('.debug[class=hide]').removeClass('hide');
         } else {
             $('.debug[class!=hide]').addColor('hide');
@@ -1176,7 +1176,7 @@ evo.ui = {
         }
 
         evo.settings.debugMode = $('#debug_mode').is(":checked");
-        if(evo.settings.debugMode) {
+        if (evo.settings.debugMode) {
             this.update();
         }
 
@@ -1207,7 +1207,7 @@ evo.ui = {
     },
     saveImage: function (width, height) {
         this.popupWindow = window.open('waiting.html', '_blank');
-        evo.drawChromosone(evo.selected, width, height, true);
+        evo.drawChromosone(evo.selected, width, height, "hd");
     },
     saveCustom: function () {
         this.popupWindow = window.open('waiting.html', '_blank');

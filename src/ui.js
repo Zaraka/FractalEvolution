@@ -10,7 +10,6 @@ evo.ui = {
     hiddable: null,
     lockable: null,
     spinner: [],
-    canvas: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
         this.command = document.getElementById("command");
@@ -22,20 +21,19 @@ evo.ui = {
         this.hiddable = $(".hiddable");
         this.lockable = $(".lockable");
 
-        for(var i = 0; i < 9; i++) {
+        for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
-            this.canvas[i] = document.getElementById(i);
         }
 
         this.update();
     },
-    clearCanvas: function(id) {
-        var ctx = this.canvas[id].getContext("2d");
+    clearCanvas: function (id) {
+        var ctx = evo.canvas[id].getContext("2d");
         ctx.fillStyle = "#FFFFFF";
-        ctx.fillRect(0,0,this.canvas[id].width, this.canvas[id].height);
+        ctx.fillRect(0, 0, evo.canvas[id].width, evo.canvas[id].height);
     },
     update: function () {
-        if(evo.settings.debugMode) {
+        if (evo.settings.debugMode) {
             $('.debug[class=hide]').removeClass('hide');
         } else {
             $('.debug[class!=hide]').addColor('hide');
@@ -71,7 +69,7 @@ evo.ui = {
         }
 
         evo.settings.debugMode = $('#debug_mode').is(":checked");
-        if(evo.settings.debugMode) {
+        if (evo.settings.debugMode) {
             this.update();
         }
 
@@ -102,7 +100,7 @@ evo.ui = {
     },
     saveImage: function (width, height) {
         this.popupWindow = window.open('waiting.html', '_blank');
-        evo.drawChromosone(evo.selected, width, height, true);
+        evo.drawChromosone(evo.selected, width, height, "hd");
     },
     saveCustom: function () {
         this.popupWindow = window.open('waiting.html', '_blank');

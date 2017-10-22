@@ -196,7 +196,26 @@ var evo = {
         var ctx;
         var imageData;
         var canvas;
-        if (!isNaN(e.data.fractalId) && isFinite(e.data.fractalId)) {
+
+        console.log(e.data.fractalId);
+        if (e.data.fractalId === "hd") {
+            canvas = document.createElement('canvas');
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
+            ctx = canvas.getContext('2d');
+            imageData = ctx.createImageData(canvas.width, canvas.height);
+            imageData.data.set(e.data.imageData);
+            ctx.putImageData(imageData, 0, 0);
+            evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
+        } else if (e.data.fractalId === "preview") {
+            canvas = document.getElementById("preview-canvas");
+            canvas.width = e.data.resolution.x;
+            canvas.height = e.data.resolution.y;
+            ctx = canvas.getContext("2d");
+            imageData = ctx.createImageData(e.data.resolution.x, e.data.resolution.y);
+            imageData.data.set(e.data.imageData);
+            ctx.putImageData(imageData, 0, 0);
+        } else if (!isNaN(e.data.fractalId) && isFinite(e.data.fractalId)) {
             //is fractal good enough?
             if (e.data.entropy <= evo.settings.entropyLimit) {
                 evo.generateFractal(e.data.fractalId); //generate new one
@@ -219,23 +238,6 @@ var evo = {
                     evo.generated = 0;
                 }
             }
-        } else if (e.data.fractalId === "hd") {
-            canvas = document.createElement('canvas');
-            canvas.width = e.data.resolution.x;
-            canvas.height = e.data.resolution.y;
-            ctx = canvas.getContext('2d');
-            imageData = ctx.createImageData(canvas.width, canvas.height);
-            imageData.data.set(e.data.imageData);
-            ctx.putImageData(imageData, 0, 0);
-            evo.ui.popupWindow.location.href = canvas.toDataURL('image/png');
-        } else if (e.data.fractalId === "preview") {
-            canvas = document.getElementById("preview-canvas");
-            canvas.width = e.data.resolution.x;
-            canvas.height = e.data.resolution.y;
-            ctx = canvas.getContext("2d");
-            imageData = ctx.createImageData(e.data.resolution.x, e.data.resolution.y);
-            imageData.data.set(e.data.imageData);
-            ctx.putImageData(imageData, 0, 0);
         }
     }
 };
