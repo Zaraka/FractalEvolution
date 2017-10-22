@@ -6,7 +6,7 @@ module.exports = function (grunt) {
         concat: {
             main: {
                 src: ['src/chromosone.js', 'src/vector.js', 'src/core.js', 'src/storage.js',
-                    'src/settings.js', 'src/ui.js'],
+                    'src/settings.js', 'src/ui.js', 'src/spinner.js'],
                 dest: 'docs/assets/js/<%= pkg.name %>.js'
             },
             worker: {

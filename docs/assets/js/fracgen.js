@@ -415,16 +415,20 @@ var evo = {
             this.ui.hiddable.addClass("hidden");
             this.ui.lockable.prop("disabled", true);
             this.ui.lockable.addClass("list-item-disabled");
-            $("#" + this.selected).parent().addClass("locked");
+            var canvas = $("#" + this.selected);
+            canvas.parent().addClass("locked");
             this.generated = 0;
             this.ui.updateCounter();
 
             for (var i = 0; i < 9; i++) {
                 if (i === this.selected) {
+                    //preserven selected
                     this.generated++;
                     this.ui.updateCounter();
                     continue;
                 }
+                this.ui.clearCanvas(i);
+                this.ui.spinner[i].spin(document.getElementById(i).parentNode);
                 this.generateFractal(i);
             }
 
@@ -558,7 +562,10 @@ var evo = {
                 imageData.data.set(e.data.imageData);
                 ctx.putImageData(imageData, 0, 0);
 
-                evo.generated++; // good continue
+                evo.generated++; // good enoug, continue
+
+                evo.ui.spinner[e.data.fractalId].stop();
+
                 evo.ui.updateCounter();
                 if (evo.generated === 9) {
                     $("#" + evo.selected).parent().removeClass("locked");
@@ -1107,6 +1114,8 @@ evo.ui = {
     customForm: null,
     hiddable: null,
     lockable: null,
+    spinner: [],
+    canvas: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
         this.command = document.getElementById("command");
@@ -1117,7 +1126,18 @@ evo.ui = {
         this.customForm = $("#saveCustom");
         this.hiddable = $(".hiddable");
         this.lockable = $(".lockable");
+
+        for(var i = 0; i < 9; i++) {
+            this.spinner[i] = new Spinner();
+            this.canvas[i] = document.getElementById(i);
+        }
+
         this.update();
+    },
+    clearCanvas: function(id) {
+        var ctx = this.canvas[id].getContext("2d");
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0,0,this.canvas[id].width, this.canvas[id].height);
     },
     update: function () {
         if(evo.settings.debugMode) {
@@ -1215,4 +1235,26 @@ evo.ui = {
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
         evo.drawCustomChromosone(chromosone);
     }
+};
+evo.spionner = {
+    lines: 13,          // The number of lines to draw
+    length: 28,         // The length of each line
+    width: 14,          // The line thickness
+    radius: 42,         // The radius of the inner circle
+    scale: 1,           // Scales overall size of the spinner
+    corners: 1,         // Corner roundness (0..1)
+    color: '#fff',      // #rgb or #rrggbb or array of colors
+    opacity: 0.25,      // Opacity of the lines
+    rotate: 0,          // The rotation offset
+    direction: 1,       // 1: clockwise, -1: counterclockwise
+    speed: 1,           // Rounds per second
+    trail: 60,          // Afterglow percentage
+    fps: 20,            // Frames per second when using setTimeout() as a fallback for CSS
+    zIndex: 2e9,        // The z-index (defaults to 2000000000)
+    className: 'spinner', // The CSS class to assign to the spinner
+    top: '50%',         // Top position relative to parent
+    left: '50%',        // Left position relative to parent
+    shadow: true,       // Whether to render a shadow
+    hwaccel: false,     // Whether to use hardware acceleration
+    position: 'absolute' // Element positioning
 };

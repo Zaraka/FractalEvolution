@@ -9,6 +9,8 @@ evo.ui = {
     customForm: null,
     hiddable: null,
     lockable: null,
+    spinner: [],
+    canvas: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
         this.command = document.getElementById("command");
@@ -19,7 +21,18 @@ evo.ui = {
         this.customForm = $("#saveCustom");
         this.hiddable = $(".hiddable");
         this.lockable = $(".lockable");
+
+        for(var i = 0; i < 9; i++) {
+            this.spinner[i] = new Spinner();
+            this.canvas[i] = document.getElementById(i);
+        }
+
         this.update();
+    },
+    clearCanvas: function(id) {
+        var ctx = this.canvas[id].getContext("2d");
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0,0,this.canvas[id].width, this.canvas[id].height);
     },
     update: function () {
         if(evo.settings.debugMode) {

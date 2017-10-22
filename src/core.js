@@ -60,16 +60,20 @@ var evo = {
             this.ui.hiddable.addClass("hidden");
             this.ui.lockable.prop("disabled", true);
             this.ui.lockable.addClass("list-item-disabled");
-            $("#" + this.selected).parent().addClass("locked");
+            var canvas = $("#" + this.selected);
+            canvas.parent().addClass("locked");
             this.generated = 0;
             this.ui.updateCounter();
 
             for (var i = 0; i < 9; i++) {
                 if (i === this.selected) {
+                    //preserven selected
                     this.generated++;
                     this.ui.updateCounter();
                     continue;
                 }
+                this.ui.clearCanvas(i);
+                this.ui.spinner[i].spin(document.getElementById(i).parentNode);
                 this.generateFractal(i);
             }
 
@@ -203,7 +207,10 @@ var evo = {
                 imageData.data.set(e.data.imageData);
                 ctx.putImageData(imageData, 0, 0);
 
-                evo.generated++; // good continue
+                evo.generated++; // good enoug, continue
+
+                evo.ui.spinner[e.data.fractalId].stop();
+
                 evo.ui.updateCounter();
                 if (evo.generated === 9) {
                     $("#" + evo.selected).parent().removeClass("locked");
