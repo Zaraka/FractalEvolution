@@ -840,19 +840,19 @@ evo.settings = {
             limit: {
                 mandelbroot_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 mandelbroot_cubic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 julia_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 glynn_all: {
                     min: 0,
-                    max: 255
+                    max: 125
                 }
             },
             include: function () {
@@ -867,19 +867,19 @@ evo.settings = {
             limit: {
                 mandelbroot_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 mandelbroot_cubic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 julia_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 glynn_all: {
                     min: 0,
-                    max: 255
+                    max: 125
                 }
             },
             include: function () {
@@ -894,19 +894,19 @@ evo.settings = {
             limit: {
                 mandelbroot_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 mandelbroot_cubic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 julia_quadratic: {
                     min: 0,
-                    max: 255
+                    max: 125
                 },
                 glynn_all: {
                     min: 0,
-                    max: 255
+                    max: 125
                 }
             },
             include: function () {
@@ -916,24 +916,24 @@ evo.settings = {
         redSpeed: {
             method: "random",
             distribution: "uniform",
-            type: "integer",
+            type: "floatr",
             chance: 0.45,
             limit: {
                 mandelbroot_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 mandelbroot_cubic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 julia_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 glynn_all: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 }
             },
             include: function () {
@@ -943,24 +943,24 @@ evo.settings = {
         greenSpeed: {
             method: "random",
             distribution: "uniform",
-            type: "integer",
+            type: "floatr",
             chance: 0.45,
             limit: {
                 mandelbroot_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 mandelbroot_cubic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 julia_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 glynn_all: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 }
             },
             include: function () {
@@ -970,24 +970,24 @@ evo.settings = {
         blueSpeed: {
             method: "random",
             distribution: "uniform",
-            type: "integer",
-            chance: 0.45,
+            type: "floatr",
+            chance:0.45,
             limit: {
                 mandelbroot_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 mandelbroot_cubic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 julia_quadratic: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 },
                 glynn_all: {
-                    min: -4,
-                    max: 4
+                    min: -2.0,
+                    max: 2.0
                 }
             },
             include: function () {
