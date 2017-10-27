@@ -36,10 +36,10 @@ evo.ui = {
         if (evo.settings.debugMode) {
             $('.debug[class=hide]').removeClass('hide');
         } else {
-            $('.debug[class!=hide]').addColor('hide');
+            $('.debug[class!=hide]').addClass('hide');
         }
 
-        if (!evo.checkSave()) {
+        if (!evo.settings.checkSave()) {
             this.load.addClass("hide");
         }
 

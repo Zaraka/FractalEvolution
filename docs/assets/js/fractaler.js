@@ -2,9 +2,40 @@ function Chromosone(/* settings or chromosone*/) {
     if (arguments.length === 1) {
         if (typeof arguments[0] === "undefined") {
             throw new TypeError("Chromosone undefined input", "chromosone.js");
+
         } else {
             var name = arguments[0].constructor.name;
-            if (name === "Chromosone") { // copy
+            if(name === "Settings") {
+                // create
+                var settings = arguments[0];
+                this.iterationMax = generateValue(null, settings.structure.iterationMax, settings.fractal);
+                this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
+                this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
+                this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
+
+                if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {
+                    this.cRe = generateValue(null, settings.structure.cRe, settings.fractal);
+                    if (settings.fractal === "julia_quadratic") {
+                        this.cIm = generateValue(null, settings.structure.cIm, settings.fractal);
+                    } else {
+                        this.exp = generateValue(null, settings.structure.exp, settings.fractal);
+                    }
+                }
+
+                if (settings.color === "pallete") {
+                    this.a = generateValue(null, settings.structure.a, settings.fractal);
+                    this.b = generateValue(null, settings.structure.b, settings.fractal);
+                    this.c = generateValue(null, settings.structure.c, settings.fractal);
+                    this.d = generateValue(null, settings.structure.d, settings.fractal);
+                } else {
+                    this.redStart = generateValue(null, settings.structure.redStart, settings.fractal);
+                    this.greenStart = generateValue(null, settings.structure.greenStart, settings.fractal);
+                    this.blueStart = generateValue(null, settings.structure.blueStart, settings.fractal);
+                    this.redSpeed = generateValue(null, settings.structure.redSpeed, settings.fractal);
+                    this.greenSpeed = generateValue(null, settings.structure.greenSpeed, settings.fractal);
+                    this.blueSpeed = generateValue(null, settings.structure.blueSpeed, settings.fractal);
+                }
+            } else { // copy
                 var that = arguments[0];
                 this.iterationMax = that.iterationMax;
                 this.zoom = that.zoom;
@@ -33,35 +64,6 @@ function Chromosone(/* settings or chromosone*/) {
                     this.b = new Vec3(that.b);
                     this.c = new Vec3(that.c);
                     this.d = new Vec3(that.d);
-                }
-            } else { // create
-                var settings = arguments[0];
-                this.iterationMax = generateValue(null, settings.structure.iterationMax, settings.fractal);
-                this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
-                this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
-                this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
-
-                if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {
-                    this.cRe = generateValue(null, settings.structure.cRe, settings.fractal);
-                    if (settings.fractal === "julia_quadratic") {
-                        this.cIm = generateValue(null, settings.structure.cIm, settings.fractal);
-                    } else {
-                        this.exp = generateValue(null, settings.structure.exp, settings.fractal);
-                    }
-                }
-
-                if (settings.color === "pallete") {
-                    this.a = generateValue(null, settings.structure.a, settings.fractal);
-                    this.b = generateValue(null, settings.structure.b, settings.fractal);
-                    this.c = generateValue(null, settings.structure.c, settings.fractal);
-                    this.d = generateValue(null, settings.structure.d, settings.fractal);
-                } else {
-                    this.redStart = generateValue(null, settings.structure.redStart, settings.fractal);
-                    this.greenStart = generateValue(null, settings.structure.greenStart, settings.fractal);
-                    this.blueStart = generateValue(null, settings.structure.blueStart, settings.fractal);
-                    this.redSpeed = generateValue(null, settings.structure.redSpeed, settings.fractal);
-                    this.greenSpeed = generateValue(null, settings.structure.greenSpeed, settings.fractal);
-                    this.blueSpeed = generateValue(null, settings.structure.blueSpeed, settings.fractal);
                 }
             }
         }
