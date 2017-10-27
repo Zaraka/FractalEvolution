@@ -67,12 +67,28 @@
                 <button class="list-group-item lockable important-button" disabled="disabled" onclick="evo.generate()">
                     Create new generation
                 </button>
-                <button class="list-group-item lockable" disabled="disabled" data-toggle="modal" data-target="#saveDialog">Save
-                    HD image</button>
+                <button class="list-group-item lockable" disabled="disabled" data-toggle="modal"
+                        data-target="#saveDialog">Save
+                    HD image
+                </button>
             </div>
             <div class="list-group">
-                <a href="#" id="load" class="list-group-item" onclick="evo.settings.load()">Load</a>
-                <a href="#" class="list-group-item" onclick="evo.settings.save()">Save</a>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="#" id="load" class="list-group-item" onclick="evo.settings.load()">Load from string</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="#" class="list-group-item" onclick="evo.settings.save()">Save to string</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <a href="#" id="load" class="list-group-item">Load from browser</a>
+                    </div>
+                    <div class="col-lg-6">
+                        <a href="#" class="list-group-item">Save to browser</a>
+                    </div>
+                </div>
             </div>
             <div class="list-group">
                 <a href="#" class="list-group-item" onclick="evo.generateNew()">Start over</a>

@@ -26,14 +26,26 @@ evo.settings = {
     color: "simple",
     debugMode: true,
     iteration: 0,
+    prepareSaveObject: function () {
+        return {
+            chromosone: evo.settings.chromosone,
+            entropyLimit: evo.settings.entropyLimit,
+            fractal: evo.settings.fractal,
+            color: evo.settings.color,
+            iteration: evo.settings.iteration
+        }
+    },
+    loadSavedObject: function (saveObject) {
+
+        this.chromosone = saveObject.chromosone;
+        this.entropyLimit = saveObject.entropyLimit;
+        this.fractal = saveObject.fractal;
+        this.color = saveObject.color;
+        this.iteration = saveObject.iteration;
+    },
     save: function () {
-        localStorage.setObject("settings", {
-                chromosone: evo.settings.chromosone,
-                entropyLimit: evo.settings.entropyLimit,
-                fractal: evo.settings.fractal,
-                color: evo.settings.color,
-                iteration: evo.settings.iteration
-            });
+        localStorage.setObject("settings", this.prepareSaveObject()
+        );
         evo.ui.load.removeClass("hide");
     },
     load: function () {
@@ -41,11 +53,7 @@ evo.settings = {
             evo.lock = true;
             if (this.checkSave()) {
                 var storedSettings = localStorage.getObject("settings");
-                this.chromosone = storedSettings.chromosone;
-                this.entropyLimit = storedSettings.entropyLimit;
-                this.fractal = storedSettings.fractal;
-                this.color = storedSettings.color;
-                this.iteration = storedSettings.iteration;
+                this.loadSavedObject(storedSettings);
 
                 evo.hideSelect();
 
