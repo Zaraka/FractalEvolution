@@ -47,6 +47,10 @@ button {
     color: #266a56 !important;
 }
 
+.list-group-item:active:focus {
+    background-color: #1a1a1a;
+}
+
 .important-button {
     font-weight: bold;
     font-size: 15pt;
