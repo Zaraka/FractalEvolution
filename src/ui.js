@@ -9,6 +9,15 @@ evo.ui = {
     customForm: null,
     hiddable: null,
     lockable: null,
+    exportDialog: null,
+    exportData: null,
+    importDialog: null,
+    importData: null,
+    saveManagerDialog: null,
+    saveManagerTableBody: null,
+    saveName: null,
+    loadManagerDialog: null,
+    loadManagerTableBody: null,
     spinner: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
@@ -20,6 +29,15 @@ evo.ui = {
         this.customForm = $("#saveCustom");
         this.hiddable = $(".hiddable");
         this.lockable = $(".lockable");
+        this.exportDialog = $("#exportDialog");
+        this.exportData = $("#exportData");
+        this.importDialog = $("#importDialog");
+        this.importData = $("#importData");
+        this.saveManagerDialog = $("#saveManagerDialog");
+        this.saveName = $("#saveName");
+        this.saveManagerTableBody = $("#saveManagerTableBody");
+        this.loadManagerDialog = $("#loadManagerDialog");
+        this.loadManagerTableBody = $("#loadManagerTableBody");
 
         for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
@@ -82,9 +100,9 @@ evo.ui = {
         if (evo.lock) {
             this.addAlertMessage(
                 "alert-danger", "Error!", "Please wait until fractals are generated");
-        } else {
-            this.custom.modal('show');
         }
+
+        this.custom.modal('show');
     },
     updateCounter: function () {
         this.command.innerHTML = "Generating " + evo.generated + "/9";
@@ -130,11 +148,82 @@ evo.ui = {
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
         evo.drawCustomChromosone(chromosone);
     },
+    openExport: function() {
+        if (evo.lock) {
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
+            return;
+        }
+
+        this.exportData.val(JSON.stringify(evo.settings.prepareSaveObject()));
+        this.exportDialog.modal('show');
+    },
+    openImport: function() {
+        if (evo.lock) {
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
+            return;
+        }
+
+        this.importDialog.modal('show');
+    },
+    onImportData: function() {
+        evo.settings.load(JSON.parse(this.importData.val()));
+    },
+    openSaveManager: function() {
+        if (evo.lock) {
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
+            return;
+        }
+
+        this.saveManagerTableBody.find("tr").remove();
+
+        var saves = evo.settings.getSavedObjects();
+        for(var i = 0; i < saves.length; i++) {
+            this.saveManagerTableBody
+                .append('<tr style="cursor: pointer" class="saveRow" onclick="$(\'#saveName\').val(\''+ saves[i].name + '\');">' +
+                    '<td>' + (i+1) + '</td>>' +
+                    '<td>' + saves[i].name + '</td></tr>');
+        }
+
+        this.saveManagerDialog.modal('show');
+    },
+    onNewSave: function() {
+        evo.settings.saveToLocalStorage(this.saveName.val());
+    },
+    openLoadManager: function() {
+        if (evo.lock) {
+            this.addAlertMessage(
+                "alert-danger", "Error!", "Please wait until fractals are generated");
+            return;
+        }
+
+        this.loadManagerTableBody.find("tr").remove();
+
+        var saves = evo.settings.getSavedObjects();
+        for(var i = 0; i < saves.length; i++) {
+            this.loadManagerTableBody
+                .append('<tr data-dismiss="modal" style="cursor: pointer" class="saveRow" onclick="evo.ui.onLoad(\'' + i + '\');">' +
+                    '<td>' + (i+1) + '</td>>' +
+                    '<td>' + saves[i].name + '</td></tr>');
+        }
+
+        this.loadManagerDialog.modal('show');
+    },
+    onLoad: function (saveIndex) {
+        evo.settings.loadFromLocalStorage(saveIndex);
+    },
     addAlertMessage: function(alertType, header, message) {
         var alert = $('<div class="alert alert-dismissable fade-in"></div>');
         alert.addClass(alertType);
         alert.append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
         alert.append('<strong>' + header + '</strong> ' + message);
+
         $('#alert-overlay').prepend(alert);
+
+        $(alert).fadeTo(6000, 500).slideUp(500, function(){
+            $(alert).alert('close');
+        });
     }
 };

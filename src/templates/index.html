@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="assets/js/spin.min.js"></script>
     <script
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+            src="https://code.jquery.com/jquery-3.2.1.min.js"
+            integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
             crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 
     <!-- Latest compiled and minified JavaScript -->
@@ -18,6 +17,8 @@
             crossorigin="anonymous"></script>
     <script src="assets/js/fracgen.js" type="text/javascript" defer></script>
     <link rel="stylesheet" href="assets/css/style.css"/>
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+
 </head>
 <body>
 <div class="container-fluid">
@@ -75,26 +76,42 @@
             <div class="list-group">
                 <div class="row">
                     <div class="col-lg-6">
-                        <a href="#" id="load" class="list-group-item" onclick="evo.settings.load()">Load from string</a>
+                        <a href="#" id="loadFromString" class="list-group-item" onclick="evo.ui.openImport()">
+                            <i class="fa fa-folder fa-fw" aria-hidden="true"></i>&nbsp;Load from string
+                        </a>
                     </div>
                     <div class="col-lg-6">
-                        <a href="#" class="list-group-item" onclick="evo.settings.save()">Save to string</a>
+                        <a href="#" id="saveToString" class="list-group-item" onclick="evo.ui.openExport()">
+                            <i class="fa fa-save fa-fw" aria-hidden="true"></i>&nbsp;Save to string
+                        </a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-6">
-                        <a href="#" id="load" class="list-group-item">Load from browser</a>
+                        <a href="#" id="loadFromBrowser" class="list-group-item" onclick="evo.ui.openLoadManager()">
+                            <i class="fa fa-folder fa-fw" aria-hidden="true"></i>&nbsp;Load from browser
+                        </a>
                     </div>
                     <div class="col-lg-6">
-                        <a href="#" class="list-group-item">Save to browser</a>
+                        <a href="#" id="saveToBrowser" class="list-group-item" onclick="evo.ui.openSaveManager()">
+                            <i class="fa fa-save fa-fw" aria-hidden="true"></i>&nbsp;Save to browser
+                        </a>
                     </div>
                 </div>
             </div>
             <div class="list-group">
-                <a href="#" class="list-group-item" onclick="evo.generateNew()">Start over</a>
-                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">Generator settings</a>
-                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">Custom fractal</a>
-                <a href="#" class="list-group-item" data-toggle="modal" data-target="#aboutDialog">About & FAQ</a>
+                <a href="#" class="list-group-item" onclick="evo.generateNew()">
+                    <i class="fa fa-file fa-fw" aria-hidden="true"></i>&nbsp;Start over
+                </a>
+                <a href="#" class="list-group-item" onclick="evo.ui.openSettings()">
+                    <i class="fa fa-wrench fa-fw" aria-hidden="true"></i>&nbsp;Generator settings
+                </a>
+                <a href="#" class="list-group-item debug" onclick="evo.ui.openCustom()">
+                    Custom fractal
+                </a>
+                <a href="#" class="list-group-item" data-toggle="modal" data-target="#aboutDialog">
+                    <i class="fa fa-life-ring fa-fw" aria-hidden="true"></i>&nbsp;About & FAQ
+                </a>
             </div>
 
             <div class="hiddable" id="details">
@@ -107,9 +124,12 @@
     </div>
 </div>
 
+include "dialogs/saveManagerDialog.html"
+include "dialogs/loadManagerDialog.html"
+include "dialogs/exportImportDialog.html"
 include "dialogs/aboutDialog.html"
 include "dialogs/customDialog.html"
-include "dialogs/saveDialog.html"
+include "dialogs/saveToHDDialog.html"
 include "dialogs/settingsDialog.html"
 
 </body>

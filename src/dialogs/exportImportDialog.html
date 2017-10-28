@@ -1,0 +1,44 @@
+<div class="modal fade" id="exportDialog" tabindex="-1" role="dialog" aria-labelledby="exportDialogLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Export to string</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="exportData">Save data</label>
+                    <textarea rows="20" class="form-control" id="exportData"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="importDialog" tabindex="-1" role="dialog" aria-labelledby="importDialogLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+                <h4 class="modal-title">Import from string</h4>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="importData">Load data</label>
+                    <textarea rows="20" class="form-control" id="importData"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                        onclick="evo.ui.onImportData();">Load data
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

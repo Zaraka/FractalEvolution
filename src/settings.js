@@ -33,26 +33,41 @@ evo.settings = {
             fractal: evo.settings.fractal,
             color: evo.settings.color,
             iteration: evo.settings.iteration
-        }
+        };
     },
     loadSavedObject: function (saveObject) {
-
         this.chromosone = saveObject.chromosone;
         this.entropyLimit = saveObject.entropyLimit;
         this.fractal = saveObject.fractal;
         this.color = saveObject.color;
         this.iteration = saveObject.iteration;
     },
-    save: function () {
-        localStorage.setObject("settings", this.prepareSaveObject()
-        );
-        evo.ui.load.removeClass("hide");
+    saveToLocalStorage: function (name) {
+        var saves = localStorage.getObject("saves");
+        if (typeof saves === "undefined" || !Array.isArray(saves))
+            saves = [];
+
+        //saves.push({name:this.prepareSaveObject()});
+        saves.push({name: name, data: this.prepareSaveObject()});
+        console.log(saves);
+        localStorage.setObject("saves", saves);
     },
-    load: function () {
-        if (!evo.lock) {
+    loadFromLocalStorage: function (i) {
+        var saves = localStorage.getObject("saves");
+        if (typeof saves === "undefined")
+            evo.ui.addAlertMessage("alert-danger", "Error!", "Save not found");
+
+        var save = saves[i].data;
+
+        if (typeof save === "undefined")
+            evo.ui.addAlertMessage("alert-danger", "Error!", "Save not found");
+
+        this.load(save);
+    },
+    load: function (storedSettings) {
+        if (!evo.lock && typeof storedSettings !== "undefined") {
             evo.lock = true;
             if (this.checkSave()) {
-                var storedSettings = localStorage.getObject("settings");
                 this.loadSavedObject(storedSettings);
 
                 evo.hideSelect();
@@ -66,6 +81,13 @@ evo.settings = {
                 evo.ui.update();
             }
         }
+    },
+    getSavedObjects: function () {
+        var saves = localStorage.getObject("saves");
+        if (typeof saves === "undefined" || !Array.isArray(saves))
+            return [];
+
+        return saves;
     },
     checkSave: function () {
         return (typeof localStorage.getObject("settings") !== "undefined");
