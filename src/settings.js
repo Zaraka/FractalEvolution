@@ -20,12 +20,29 @@ evo.settings = {
         name: "Settings"
     },
     chromosone: [],
+    history: [],
+    historyCursor: 0,
     // Defaults
     entropyLimit: 7.0,
     fractal: "mandelbroot_quadratic",
     color: "simple",
     debugMode: true,
     iteration: 0,
+    historyInsert: function() {
+        this.history = this.history.slice(0, this.historyCursor + 1);
+        this.history.push(JSON.parse(JSON.stringify(this.prepareSaveObject())));
+        this.historyCursor = this.history.length - 1;
+        console.log(this.history);
+        console.log(this.historyCursor);
+    },
+    historyBackward: function() {
+        this.historyCursor--;
+        this.load(this.history[this.historyCursor]);
+    },
+    historyForward: function() {
+        this.historyCursor++;
+        this.load(this.history[this.historyCursor]);
+    },
     prepareSaveObject: function () {
         return {
             chromosone: evo.settings.chromosone,

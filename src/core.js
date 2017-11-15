@@ -82,6 +82,9 @@ var evo = {
 
             this.settings.iteration++;
             this.ui.updateIterator();
+
+            this.settings.historyInsert();
+            this.ui.updateHistory();
         }
     },
     generateFractal: function (id) {
