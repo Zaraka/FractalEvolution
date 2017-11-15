@@ -763,7 +763,7 @@ evo.settings.structure = {
             },
             julia_quadratic: {
                 min: 1,
-                    max: 100
+                    max: 300
             },
             glynn_all: {
                 min: 1,
