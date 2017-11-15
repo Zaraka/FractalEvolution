@@ -64,10 +64,29 @@
         <div id="menu" class="col-lg-3 menu">
             <h1>Iteration <span id="iteration"></span></h1>
             <h3 id="command">&nbsp;</h3>
-            <div class="list-group">
-                <button class="list-group-item lockable important-button" disabled="disabled" onclick="evo.generate()">
-                    Create new generation
+            <div class="list-inline">
+                <button
+                        class="list-inline-item important-button"
+                        id="historyBackward"
+                        disabled="disabled"
+                        onclick="evo.settings.historyBackward()">
+                    <
                 </button>
+                <button
+                        class="list-inline-item lockable important-button"
+                        disabled="disabled"
+                        onclick="evo.generate()">
+                    New generation
+                </button>
+                <button
+                        class="list-inline-item important-button"
+                        id="historyForward"
+                        disabled="disabled"
+                        onclick="evo.settings.historyForward()">
+                    >
+                </button>
+            </div>
+            <div class="list-group">
                 <button class="list-group-item lockable" disabled="disabled" data-toggle="modal"
                         data-target="#saveDialog">Save
                     HD image

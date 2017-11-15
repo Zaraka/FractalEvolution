@@ -439,6 +439,9 @@ var evo = {
 
             this.settings.iteration++;
             this.ui.updateIterator();
+
+            this.settings.historyInsert();
+            this.ui.updateHistory();
         }
     },
     generateFractal: function (id) {
@@ -646,12 +649,29 @@ evo.settings = {
         name: "Settings"
     },
     chromosone: [],
+    history: [],
+    historyCursor: 0,
     // Defaults
     entropyLimit: 7.0,
     fractal: "mandelbroot_quadratic",
     color: "simple",
     debugMode: true,
     iteration: 0,
+    historyInsert: function() {
+        this.history = this.history.slice(0, this.historyCursor + 1);
+        this.history.push(JSON.parse(JSON.stringify(this.prepareSaveObject())));
+        this.historyCursor = this.history.length - 1;
+        console.log(this.history);
+        console.log(this.historyCursor);
+    },
+    historyBackward: function() {
+        this.historyCursor--;
+        this.load(this.history[this.historyCursor]);
+    },
+    historyForward: function() {
+        this.historyCursor++;
+        this.load(this.history[this.historyCursor]);
+    },
     prepareSaveObject: function () {
         return {
             chromosone: evo.settings.chromosone,
@@ -1176,6 +1196,8 @@ evo.ui = {
     saveName: null,
     loadManagerDialog: null,
     loadManagerTableBody: null,
+    historyBackward: null,
+    historyForward: null,
     spinner: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
@@ -1196,12 +1218,31 @@ evo.ui = {
         this.saveManagerTableBody = $("#saveManagerTableBody");
         this.loadManagerDialog = $("#loadManagerDialog");
         this.loadManagerTableBody = $("#loadManagerTableBody");
+        this.historyBackward = $("#historyBackward");
+        this.historyForward = $("#historyForward");
 
         for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
         }
 
         this.update();
+    },
+    updateHistory: function() {
+        if(evo.settings.historyCursor < (evo.settings.history.length - 1)) {
+            this.historyForward.removeClass("list-item-disabled");
+            this.historyForward.prop("disabled", false);
+        } else {
+            this.historyForward.addClass("list-item-disabled");
+            this.historyForward.prop("disabled", true);
+        }
+
+        if(evo.settings.historyCursor > 0) {
+            this.historyBackward.removeClass("list-item-disabled");
+            this.historyBackward.prop("disabled", false);
+        } else {
+            this.historyBackward.addClass("list-item-disabled");
+            this.historyBackward.prop("disabled", true);
+        }
     },
     clearCanvas: function (id) {
         var ctx = evo.canvas[id].getContext("2d");
@@ -1220,6 +1261,7 @@ evo.ui = {
         }
 
         evo.ui.updateIterator();
+        evo.ui.updateHistory();
     },
     openSettings: function () {
         if (evo.lock) {

@@ -18,6 +18,8 @@ evo.ui = {
     saveName: null,
     loadManagerDialog: null,
     loadManagerTableBody: null,
+    historyBackward: null,
+    historyForward: null,
     spinner: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
@@ -38,12 +40,31 @@ evo.ui = {
         this.saveManagerTableBody = $("#saveManagerTableBody");
         this.loadManagerDialog = $("#loadManagerDialog");
         this.loadManagerTableBody = $("#loadManagerTableBody");
+        this.historyBackward = $("#historyBackward");
+        this.historyForward = $("#historyForward");
 
         for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
         }
 
         this.update();
+    },
+    updateHistory: function() {
+        if(evo.settings.historyCursor < (evo.settings.history.length - 1)) {
+            this.historyForward.removeClass("list-item-disabled");
+            this.historyForward.prop("disabled", false);
+        } else {
+            this.historyForward.addClass("list-item-disabled");
+            this.historyForward.prop("disabled", true);
+        }
+
+        if(evo.settings.historyCursor > 0) {
+            this.historyBackward.removeClass("list-item-disabled");
+            this.historyBackward.prop("disabled", false);
+        } else {
+            this.historyBackward.addClass("list-item-disabled");
+            this.historyBackward.prop("disabled", true);
+        }
     },
     clearCanvas: function (id) {
         var ctx = evo.canvas[id].getContext("2d");
@@ -62,6 +83,7 @@ evo.ui = {
         }
 
         evo.ui.updateIterator();
+        evo.ui.updateHistory();
     },
     openSettings: function () {
         if (evo.lock) {
