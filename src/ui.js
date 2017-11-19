@@ -49,8 +49,24 @@ evo.ui = {
 
         this.update();
     },
-    updateHistory: function() {
-        if(evo.settings.historyCursor < (evo.settings.history.length - 1)) {
+    hideSelect: function () {
+        if (evo.selected !== null)
+            $("#" + evo.selected).parent().removeClass("active");
+
+        this.hiddable.addClass("hidden");
+        this.lockable.addClass("list-item-disabled");
+        this.lockable.prop("disabled", true);
+        this.command.innerHTML = "Select fractal you like";
+        evo.selected = null;
+    },
+    lockHistory: function () {
+        this.historyForward.addClass("list-item-disabled");
+        this.historyForward.prop("disabled", true);
+        this.historyBackward.addClass("list-item-disabled");
+        this.historyBackward.prop("disabled", true);
+    },
+    updateHistory: function () {
+        if (evo.settings.historyCursor < (evo.settings.history.length - 1)) {
             this.historyForward.removeClass("list-item-disabled");
             this.historyForward.prop("disabled", false);
         } else {
@@ -58,7 +74,7 @@ evo.ui = {
             this.historyForward.prop("disabled", true);
         }
 
-        if(evo.settings.historyCursor > 0) {
+        if (evo.settings.historyCursor > 0) {
             this.historyBackward.removeClass("list-item-disabled");
             this.historyBackward.prop("disabled", false);
         } else {
@@ -170,7 +186,7 @@ evo.ui = {
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
         evo.drawCustomChromosone(chromosone);
     },
-    openExport: function() {
+    openExport: function () {
         if (evo.lock) {
             this.addAlertMessage(
                 "alert-danger", "Error!", "Please wait until fractals are generated");
@@ -180,7 +196,7 @@ evo.ui = {
         this.exportData.val(JSON.stringify(evo.settings.prepareSaveObject()));
         this.exportDialog.modal('show');
     },
-    openImport: function() {
+    openImport: function () {
         if (evo.lock) {
             this.addAlertMessage(
                 "alert-danger", "Error!", "Please wait until fractals are generated");
@@ -189,10 +205,10 @@ evo.ui = {
 
         this.importDialog.modal('show');
     },
-    onImportData: function() {
+    onImportData: function () {
         evo.settings.load(JSON.parse(this.importData.val()));
     },
-    openSaveManager: function() {
+    openSaveManager: function () {
         if (evo.lock) {
             this.addAlertMessage(
                 "alert-danger", "Error!", "Please wait until fractals are generated");
@@ -202,19 +218,19 @@ evo.ui = {
         this.saveManagerTableBody.find("tr").remove();
 
         var saves = evo.settings.getSavedObjects();
-        for(var i = 0; i < saves.length; i++) {
+        for (var i = 0; i < saves.length; i++) {
             this.saveManagerTableBody
-                .append('<tr style="cursor: pointer" class="saveRow" onclick="$(\'#saveName\').val(\''+ saves[i].name + '\');">' +
-                    '<td>' + (i+1) + '</td>>' +
+                .append('<tr style="cursor: pointer" class="saveRow" onclick="$(\'#saveName\').val(\'' + saves[i].name + '\');">' +
+                    '<td>' + (i + 1) + '</td>>' +
                     '<td>' + saves[i].name + '</td></tr>');
         }
 
         this.saveManagerDialog.modal('show');
     },
-    onNewSave: function() {
+    onNewSave: function () {
         evo.settings.saveToLocalStorage(this.saveName.val());
     },
-    openLoadManager: function() {
+    openLoadManager: function () {
         if (evo.lock) {
             this.addAlertMessage(
                 "alert-danger", "Error!", "Please wait until fractals are generated");
@@ -224,10 +240,10 @@ evo.ui = {
         this.loadManagerTableBody.find("tr").remove();
 
         var saves = evo.settings.getSavedObjects();
-        for(var i = 0; i < saves.length; i++) {
+        for (var i = 0; i < saves.length; i++) {
             this.loadManagerTableBody
                 .append('<tr data-dismiss="modal" style="cursor: pointer" class="saveRow" onclick="evo.ui.onLoad(\'' + i + '\');">' +
-                    '<td>' + (i+1) + '</td>>' +
+                    '<td>' + (i + 1) + '</td>>' +
                     '<td>' + saves[i].name + '</td></tr>');
         }
 
@@ -236,7 +252,7 @@ evo.ui = {
     onLoad: function (saveIndex) {
         evo.settings.loadFromLocalStorage(saveIndex);
     },
-    addAlertMessage: function(alertType, header, message) {
+    addAlertMessage: function (alertType, header, message) {
         var alert = $('<div class="alert alert-dismissable fade-in"></div>');
         alert.addClass(alertType);
         alert.append('<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>');
@@ -244,7 +260,7 @@ evo.ui = {
 
         $('#alert-overlay').prepend(alert);
 
-        $(alert).fadeTo(6000, 500).slideUp(500, function(){
+        $(alert).fadeTo(6000, 500).slideUp(500, function () {
             $(alert).alert('close');
         });
     }

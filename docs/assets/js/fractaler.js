@@ -417,7 +417,8 @@ onmessage = function (e) {
         entropy: entropy,
         resolution: e.data.resolution,
         move: new Vec2(e.data.moveX, e.data.moveY),
-        zoom: e.data.zoom
+        zoom: e.data.zoom,
+        loading: e.data.loading
     });
 };
 

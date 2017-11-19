@@ -44,7 +44,7 @@ var evo = {
             this.lock = false;
 
             this.generate();
-            this.hideSelect();
+            this.ui.hideSelect();
         }
     },
     generateNew: function () {
@@ -53,13 +53,16 @@ var evo = {
                 "alert-danger", "Error!", "Please wait until new fractals are generated before reseting.");
         } else {
             this.ui.resetIteration();
-            this.hideSelect();
+            this.ui.hideSelect();
+            this.ui.lockHistory();
+            this.settings.clearHistory();
             this.generate();
         }
     },
     generate: function () {
         if (!this.lock) {
             this.lock = true;
+            this.ui.lockHistory();
             this.ui.hiddable.addClass("hidden");
             this.ui.lockable.prop("disabled", true);
             this.ui.lockable.addClass("list-item-disabled");
@@ -82,9 +85,6 @@ var evo = {
 
             this.settings.iteration++;
             this.ui.updateIterator();
-
-            this.settings.historyInsert();
-            this.ui.updateHistory();
         }
     },
     generateFractal: function (id) {
@@ -99,9 +99,9 @@ var evo = {
             this.settings.chromosone[id] = chromosone;
         }
 
-        this.drawChromosone(id, null, null);
+        this.drawChromosone(id, null, null, false);
     },
-    drawChromosone: function (id, width, height, type) {
+    drawChromosone: function (id, width, height, loading, type) {
         type = typeof  type === "undefined" ? false : type;
         var chromosone = new Chromosone(this.settings.chromosone[id]);
         chromosone.fractalId = type ? type : id;
@@ -112,6 +112,7 @@ var evo = {
         chromosone.color = this.settings.color;
         chromosone.start = new Vec3(chromosone.redStart, chromosone.greenStart, chromosone.blueStart);
         chromosone.speed = new Vec3(chromosone.redSpeed, chromosone.greenSpeed, chromosone.blueSpeed);
+        chromosone.loading = loading;
         if (type === "preview") {
             chromosone.limit = new Vec2(
                 evo.settings.structure.moveX.limit[this.settings.fractal].center,
@@ -127,7 +128,7 @@ var evo = {
     select: function (id) {
         if (!this.lock) {
             if (id === this.selected) {//unselect
-                this.hideSelect();
+                this.ui.hideSelect();
             } else {//select
                 if (this.selected !== null) {
                     $("#" + this.selected).parent().removeClass("active");
@@ -138,7 +139,7 @@ var evo = {
 
                 this.ui.details.empty();
                 $('<canvas id="preview-canvas" style="width: 150px; height: 150px"></canvas>').appendTo(this.ui.details);
-                this.drawChromosone(id, 150, 150, "preview");
+                this.drawChromosone(id, 150, 150, true, "preview");
 
                 var ul = $('<table style="margin: 0 auto;"></table>').appendTo(this.ui.details);
                 var chromosone = this.settings.chromosone[this.selected];
@@ -188,16 +189,6 @@ var evo = {
             }
         }
     },
-    hideSelect: function () {
-        if (this.selected !== null)
-            $("#" + this.selected).parent().removeClass("active");
-
-        this.ui.hiddable.addClass("hidden");
-        this.ui.lockable.addClass("list-item-disabled");
-        this.ui.lockable.prop("disabled", true);
-        this.ui.command.innerHTML = "Select fractal you like";
-        this.selected = null;
-    },
     processWorkerMessage: function (e) {
         var ctx;
         var imageData;
@@ -234,14 +225,19 @@ var evo = {
                 imageData.data.set(e.data.imageData);
                 ctx.putImageData(imageData, 0, 0);
 
-                evo.generated++; // good enoug, continue
+                evo.generated++; // good enough, continue
 
                 evo.ui.spinner[e.data.fractalId].stop();
 
                 evo.ui.updateCounter();
                 if (evo.generated === 9) {
                     $("#" + evo.selected).parent().removeClass("locked");
-                    evo.hideSelect();
+                    evo.ui.hideSelect();
+                    if(!e.data.loading) {
+                        evo.settings.historyInsert();
+                        evo.ui.updateHistory();
+                    }
+
                     evo.lock = false;
                     evo.generated = 0;
                 }

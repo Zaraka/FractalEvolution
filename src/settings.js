@@ -29,11 +29,9 @@ evo.settings = {
     debugMode: true,
     iteration: 0,
     historyInsert: function() {
-        this.history = this.history.slice(0, this.historyCursor + 1);
+        this.history = this.history.slice(0, this.history.length);
         this.history.push(JSON.parse(JSON.stringify(this.prepareSaveObject())));
         this.historyCursor = this.history.length - 1;
-        console.log(this.history);
-        console.log(this.historyCursor);
     },
     historyBackward: function() {
         this.historyCursor--;
@@ -42,6 +40,10 @@ evo.settings = {
     historyForward: function() {
         this.historyCursor++;
         this.load(this.history[this.historyCursor]);
+    },
+    clearHistory: function() {
+        this.history = [];
+        this.historyCursor = 0;
     },
     prepareSaveObject: function () {
         return {
@@ -87,12 +89,13 @@ evo.settings = {
             if (this.checkSave()) {
                 this.loadSavedObject(storedSettings);
 
-                evo.hideSelect();
+                evo.ui.hideSelect();
+                evo.ui.lockHistory();
 
                 for (var i = 0; i < 9; i++) {
                     evo.ui.clearCanvas(i);
                     evo.ui.spinner[i].spin(document.getElementById(i).parentNode);
-                    evo.drawChromosone(i, null, null);
+                    evo.drawChromosone(i, null, null, true);
                 }
 
                 evo.ui.update();
