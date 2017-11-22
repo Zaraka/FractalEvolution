@@ -26,6 +26,7 @@ evo.settings = {
     entropyLimit: 7.0,
     fractal: "mandelbroot_quadratic",
     color: "simple",
+    noZoom: false,
     debugMode: true,
     iteration: 0,
     historyInsert: function() {
@@ -51,7 +52,8 @@ evo.settings = {
             entropyLimit: evo.settings.entropyLimit,
             fractal: evo.settings.fractal,
             color: evo.settings.color,
-            iteration: evo.settings.iteration
+            iteration: evo.settings.iteration,
+            noZoom: evo.settings.noZoom
         };
     },
     loadSavedObject: function (saveObject) {
@@ -60,6 +62,7 @@ evo.settings = {
         this.fractal = saveObject.fractal;
         this.color = saveObject.color;
         this.iteration = saveObject.iteration;
+        this.noZoom = saveObject.noZoom;
     },
     saveToLocalStorage: function (name) {
         var saves = localStorage.getObject("saves");

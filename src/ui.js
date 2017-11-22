@@ -20,6 +20,7 @@ evo.ui = {
     loadManagerTableBody: null,
     historyBackward: null,
     historyForward: null,
+    noZoomCheckbox: null,
     spinner: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
@@ -42,6 +43,7 @@ evo.ui = {
         this.loadManagerTableBody = $("#loadManagerTableBody");
         this.historyBackward = $("#historyBackward");
         this.historyForward = $("#historyForward");
+        this.noZoomCheckbox = $("#noZoomCheckbox");
 
         for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
@@ -109,12 +111,16 @@ evo.ui = {
             $('#color[name=color][value=' + evo.settings.color + ']').prop("checked", true);
             $('#fractal[name=color][value=' + evo.settings.fractal + ']').prop("checked", true);
             $('#debug_mode').prop("checked", evo.settings.debugMode);
+            this.noZoomCheckbox.prop("checked", evo.settings.noZoom);
+
             this.settings.modal('show');
         }
     },
     saveSettings: function () {
         var newColor = $('input[name=color]:checked', '#settingsDialog').val();
         var newFractal = $('input[name=fractal]:checked', '#settingsDialog').val();
+        //var noZoom =
+
         var regenerate = false;
         if (newColor !== evo.settings.color) {
             evo.settings.color = newColor;
@@ -124,6 +130,7 @@ evo.ui = {
             evo.settings.fractal = newFractal;
             regenerate = true;
         }
+        if()
 
         evo.settings.debugMode = $('#debug_mode').is(":checked");
         if (evo.settings.debugMode) {
