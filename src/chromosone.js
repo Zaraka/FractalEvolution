@@ -14,13 +14,13 @@ function Chromosone(/* settings or chromosone*/) {
         var settings = arguments[0];
         this.iterationMax = generateValue(null, settings.structure.iterationMax, settings.fractal);
         if(settings.noZoom) {
-            this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
-            this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
-            this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
-        } else {
             this.zoom = 1.0;
             this.moveX = settings.structure.moveX.limit[settings.fractal].center;
             this.moveY = settings.structure.moveY.limit[settings.fractal].center;
+        } else {
+            this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
+            this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
+            this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
         }
 
         if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {

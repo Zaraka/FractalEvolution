@@ -119,7 +119,7 @@ evo.ui = {
     saveSettings: function () {
         var newColor = $('input[name=color]:checked', '#settingsDialog').val();
         var newFractal = $('input[name=fractal]:checked', '#settingsDialog').val();
-        //var noZoom =
+        var noZoom = this.noZoomCheckbox.prop("checked");
 
         var regenerate = false;
         if (newColor !== evo.settings.color) {
@@ -130,7 +130,10 @@ evo.ui = {
             evo.settings.fractal = newFractal;
             regenerate = true;
         }
-        if()
+        if(noZoom !== evo.settings.noZoom) {
+            evo.settings.noZoom = noZoom;
+            regenerate = true;
+        }
 
         evo.settings.debugMode = $('#debug_mode').is(":checked");
         if (evo.settings.debugMode) {

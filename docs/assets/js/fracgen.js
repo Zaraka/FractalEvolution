@@ -1,74 +1,80 @@
 function Chromosone(/* settings or chromosone*/) {
-    if (arguments.length === 1) {
-        if (typeof arguments[0] === "undefined") {
-            throw new TypeError("Chromosone undefined input", "chromosone.js");
+    if (arguments.length < 1 && arguments.length > 1 ) {
+        throw new SyntaxError("Chromosone invalid arguments", "chromosone.js");
+    }
 
+    if (typeof arguments[0] === "undefined") {
+        throw new TypeError("Chromosone undefined input", "chromosone.js");
+    }
+
+
+    var name = arguments[0].constructor.name;
+    if(name === "Settings") {
+        // create
+        var settings = arguments[0];
+        this.iterationMax = generateValue(null, settings.structure.iterationMax, settings.fractal);
+        if(settings.noZoom) {
+            this.zoom = 1.0;
+            this.moveX = settings.structure.moveX.limit[settings.fractal].center;
+            this.moveY = settings.structure.moveY.limit[settings.fractal].center;
         } else {
-            var name = arguments[0].constructor.name;
-            if(name === "Settings") {
-                // create
-                var settings = arguments[0];
-                this.iterationMax = generateValue(null, settings.structure.iterationMax, settings.fractal);
-                this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
-                this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
-                this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
+            this.zoom = generateValue(null, settings.structure.zoom, settings.fractal);
+            this.moveX = generateValue(null, settings.structure.moveX, settings.fractal);
+            this.moveY = generateValue(null, settings.structure.moveY, settings.fractal);
+        }
 
-                if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {
-                    this.cRe = generateValue(null, settings.structure.cRe, settings.fractal);
-                    if (settings.fractal === "julia_quadratic") {
-                        this.cIm = generateValue(null, settings.structure.cIm, settings.fractal);
-                    } else {
-                        this.exp = generateValue(null, settings.structure.exp, settings.fractal);
-                    }
-                }
-
-                if (settings.color === "pallete") {
-                    this.a = generateValue(null, settings.structure.a, settings.fractal);
-                    this.b = generateValue(null, settings.structure.b, settings.fractal);
-                    this.c = generateValue(null, settings.structure.c, settings.fractal);
-                    this.d = generateValue(null, settings.structure.d, settings.fractal);
-                } else {
-                    this.redStart = generateValue(null, settings.structure.redStart, settings.fractal);
-                    this.greenStart = generateValue(null, settings.structure.greenStart, settings.fractal);
-                    this.blueStart = generateValue(null, settings.structure.blueStart, settings.fractal);
-                    this.redSpeed = generateValue(null, settings.structure.redSpeed, settings.fractal);
-                    this.greenSpeed = generateValue(null, settings.structure.greenSpeed, settings.fractal);
-                    this.blueSpeed = generateValue(null, settings.structure.blueSpeed, settings.fractal);
-                }
-            } else { // copy
-                var that = arguments[0];
-                this.iterationMax = that.iterationMax;
-                this.zoom = that.zoom;
-                this.moveX = that.moveX;
-                this.moveY = that.moveY;
-
-                if (typeof that.cRe !== "undefined") {
-                    this.cRe = that.cRe;
-                }
-                if (typeof that.cIm !== "undefined") {
-                    this.cIm = that.cIm;
-                }
-                if (typeof that.exp !== "undefined") {
-                    this.exp = that.exp;
-                }
-
-                if (typeof that.a === "undefined") {
-                    this.redStart = that.redStart;
-                    this.greenStart = that.greenStart;
-                    this.blueStart = that.blueStart;
-                    this.redSpeed = that.redSpeed;
-                    this.greenSpeed = that.greenSpeed;
-                    this.blueSpeed = that.blueSpeed;
-                } else {
-                    this.a = new Vec3(that.a);
-                    this.b = new Vec3(that.b);
-                    this.c = new Vec3(that.c);
-                    this.d = new Vec3(that.d);
-                }
+        if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {
+            this.cRe = generateValue(null, settings.structure.cRe, settings.fractal);
+            if (settings.fractal === "julia_quadratic") {
+                this.cIm = generateValue(null, settings.structure.cIm, settings.fractal);
+            } else {
+                this.exp = generateValue(null, settings.structure.exp, settings.fractal);
             }
         }
-    } else {
-        throw new SyntaxError("Chromosone invalid arguments", "chromosone.js");
+
+        if (settings.color === "pallete") {
+            this.a = generateValue(null, settings.structure.a, settings.fractal);
+            this.b = generateValue(null, settings.structure.b, settings.fractal);
+            this.c = generateValue(null, settings.structure.c, settings.fractal);
+            this.d = generateValue(null, settings.structure.d, settings.fractal);
+        } else {
+            this.redStart = generateValue(null, settings.structure.redStart, settings.fractal);
+            this.greenStart = generateValue(null, settings.structure.greenStart, settings.fractal);
+            this.blueStart = generateValue(null, settings.structure.blueStart, settings.fractal);
+            this.redSpeed = generateValue(null, settings.structure.redSpeed, settings.fractal);
+            this.greenSpeed = generateValue(null, settings.structure.greenSpeed, settings.fractal);
+            this.blueSpeed = generateValue(null, settings.structure.blueSpeed, settings.fractal);
+        }
+    } else { // copy
+        var that = arguments[0];
+        this.iterationMax = that.iterationMax;
+        this.zoom = that.zoom;
+        this.moveX = that.moveX;
+        this.moveY = that.moveY;
+
+        if (typeof that.cRe !== "undefined") {
+            this.cRe = that.cRe;
+        }
+        if (typeof that.cIm !== "undefined") {
+            this.cIm = that.cIm;
+        }
+        if (typeof that.exp !== "undefined") {
+            this.exp = that.exp;
+        }
+
+        if (typeof that.a === "undefined") {
+            this.redStart = that.redStart;
+            this.greenStart = that.greenStart;
+            this.blueStart = that.blueStart;
+            this.redSpeed = that.redSpeed;
+            this.greenSpeed = that.greenSpeed;
+            this.blueSpeed = that.blueSpeed;
+        } else {
+            this.a = new Vec3(that.a);
+            this.b = new Vec3(that.b);
+            this.c = new Vec3(that.c);
+            this.d = new Vec3(that.d);
+        }
     }
 }
 
@@ -76,12 +82,15 @@ Chromosone.prototype.mutate = function (settings) {
     var structure = settings.structure;
     if (Math.random() <= structure.iterationMax.chance)
         this.iterationMax = generateValue(this.iterationMax, structure.iterationMax, settings.fractal);
-    if (Math.random() <= structure.zoom.chance)
-        this.zoom = generateValue(this.zoom, structure.zoom, settings.fractal);
-    if (Math.random() <= structure.moveX.chance)
-        this.moveX = generateValue(this.moveX, structure.moveX, settings.fractal);
-    if (Math.random() <= structure.moveY.chance)
-        this.moveY = generateValue(this.moveY, structure.moveY, settings.fractal);
+
+    if(!noZoom) {
+        if (Math.random() <= structure.zoom.chance)
+            this.zoom = generateValue(this.zoom, structure.zoom, settings.fractal);
+        if (Math.random() <= structure.moveX.chance)
+            this.moveX = generateValue(this.moveX, structure.moveX, settings.fractal);
+        if (Math.random() <= structure.moveY.chance)
+            this.moveY = generateValue(this.moveY, structure.moveY, settings.fractal);
+    }
 
     if (settings.fractal === "glynn_all" || settings.fractal === "julia_quadratic") {
         if (Math.random() <= structure.cRe.chance)
@@ -651,6 +660,7 @@ evo.settings = {
     entropyLimit: 7.0,
     fractal: "mandelbroot_quadratic",
     color: "simple",
+    noZoom: false,
     debugMode: true,
     iteration: 0,
     historyInsert: function() {
@@ -676,7 +686,8 @@ evo.settings = {
             entropyLimit: evo.settings.entropyLimit,
             fractal: evo.settings.fractal,
             color: evo.settings.color,
-            iteration: evo.settings.iteration
+            iteration: evo.settings.iteration,
+            noZoom: evo.settings.noZoom
         };
     },
     loadSavedObject: function (saveObject) {
@@ -685,6 +696,7 @@ evo.settings = {
         this.fractal = saveObject.fractal;
         this.color = saveObject.color;
         this.iteration = saveObject.iteration;
+        this.noZoom = saveObject.noZoom;
     },
     saveToLocalStorage: function (name) {
         var saves = localStorage.getObject("saves");
@@ -1197,6 +1209,7 @@ evo.ui = {
     loadManagerTableBody: null,
     historyBackward: null,
     historyForward: null,
+    noZoomCheckbox: null,
     spinner: [],
     init: function () {
         this.iterationSpan = document.getElementById('iteration');
@@ -1219,6 +1232,7 @@ evo.ui = {
         this.loadManagerTableBody = $("#loadManagerTableBody");
         this.historyBackward = $("#historyBackward");
         this.historyForward = $("#historyForward");
+        this.noZoomCheckbox = $("#noZoomCheckbox");
 
         for (var i = 0; i < 9; i++) {
             this.spinner[i] = new Spinner();
@@ -1286,12 +1300,16 @@ evo.ui = {
             $('#color[name=color][value=' + evo.settings.color + ']').prop("checked", true);
             $('#fractal[name=color][value=' + evo.settings.fractal + ']').prop("checked", true);
             $('#debug_mode').prop("checked", evo.settings.debugMode);
+            this.noZoomCheckbox.prop("checked", evo.settings.noZoom);
+
             this.settings.modal('show');
         }
     },
     saveSettings: function () {
         var newColor = $('input[name=color]:checked', '#settingsDialog').val();
         var newFractal = $('input[name=fractal]:checked', '#settingsDialog').val();
+        var noZoom = this.noZoomCheckbox.prop("checked");
+
         var regenerate = false;
         if (newColor !== evo.settings.color) {
             evo.settings.color = newColor;
@@ -1299,6 +1317,10 @@ evo.ui = {
         }
         if (newFractal !== evo.settings.fractal) {
             evo.settings.fractal = newFractal;
+            regenerate = true;
+        }
+        if(noZoom !== evo.settings.noZoom) {
+            evo.settings.noZoom = noZoom;
             regenerate = true;
         }
 
