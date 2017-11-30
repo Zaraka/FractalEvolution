@@ -83,7 +83,7 @@ Chromosone.prototype.mutate = function (settings) {
     if (Math.random() <= structure.iterationMax.chance)
         this.iterationMax = generateValue(this.iterationMax, structure.iterationMax, settings.fractal);
 
-    if(!noZoom) {
+    if(!settings.noZoom) {
         if (Math.random() <= structure.zoom.chance)
             this.zoom = generateValue(this.zoom, structure.zoom, settings.fractal);
         if (Math.random() <= structure.moveX.chance)
